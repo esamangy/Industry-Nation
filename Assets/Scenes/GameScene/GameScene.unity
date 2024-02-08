@@ -242,6 +242,7 @@ MonoBehaviour:
   interactLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  selectedShelf: {fileID: 0}
 --- !u!1 &136757754
 GameObject:
   m_ObjectHideFlags: 0
@@ -1581,7 +1582,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1473611409780973752, guid: 36062aadb6b75fc478e92f845fc59c15, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

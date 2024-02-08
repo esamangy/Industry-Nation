@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class GameInput : MonoBehaviour{
-    private PlayerInputActions playerInput;
-    // Player input events
+    //Events
     public event EventHandler OnInteractAction;
+    private PlayerInputActions playerInput;
     private void Awake() {
         playerInput = new PlayerInputActions();
         playerInput.Player.Enable();
