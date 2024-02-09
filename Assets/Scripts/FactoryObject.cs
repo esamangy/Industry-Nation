@@ -7,28 +7,28 @@ public class FactoryObject : MonoBehaviour {
     
     [SerializeField] private FactoryObjectSO factoryObjectSO;
 
-    private MediumShelf mediumShelf;
+    private IFactoryObjectParent factoryObjectParent;
     public FactoryObjectSO GetFactoryObjectSO(){
         return factoryObjectSO;
     }
 
-    public void SetMediumShelf(MediumShelf mediumShelf){
-        if(this.mediumShelf != null){
-            this.mediumShelf.ClearFactoryObject();
+    public void SetFactoryObjectParent(IFactoryObjectParent factoryObjectParent){
+        if(this.factoryObjectParent != null){
+            this.factoryObjectParent.ClearFactoryObject();
         }
 
-        this.mediumShelf = mediumShelf;
+        this.factoryObjectParent = factoryObjectParent;
 
-        if(mediumShelf.HasFactoryObject()){
+        if(factoryObjectParent.HasFactoryObject()){
             throw new Exception("Counter already has a FactoryObject!");
         }
-        mediumShelf.SetFactoryObject(this);
+        factoryObjectParent.SetFactoryObject(this);
 
-        transform.parent = mediumShelf.GetFactoryObjectFollowTransform();
+        transform.parent = factoryObjectParent.GetFactoryObjectFollowTransform();
         transform.localPosition = Vector3.zero;
     }
 
-    public MediumShelf GetMediumShelf(){
-        return mediumShelf;
+    public IFactoryObjectParent GetFactoryObjectParent(){
+        return factoryObjectParent;
     }
 }

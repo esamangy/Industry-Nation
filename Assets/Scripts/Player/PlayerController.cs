@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour, IFactoryObjectParent {
     public static PlayerController Instance{get; private set;}
     //Events
     public event EventHandler<OnSelectedShelfChangedEventArgs> OnSelectedShelfChanged;
@@ -13,12 +13,14 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float rotateSpeed = 10f;
-    private float playerHeight = 2f;
+    private float playerHeight = 1.5f;
     [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask interactLayerMask;
+    [SerializeField] private Transform factoryObjectHoldPoint;
     private bool isWalking;
     private Vector3 lastInteractDir;
-    public MediumShelf selectedShelf;
+    private MediumShelf selectedShelf;
+    private FactoryObject factoryObject;
 
     private void Awake() {
         if(Instance != null){
@@ -93,7 +95,7 @@ public class PlayerController : MonoBehaviour {
     }
     private void GameInput_OnInteractAction(object sender, EventArgs e) {
         if(selectedShelf != null){
-            selectedShelf.Interact();
+            selectedShelf.Interact(this);
         }
     }
     public bool IsWalking(){
@@ -105,5 +107,25 @@ public class PlayerController : MonoBehaviour {
         OnSelectedShelfChanged?.Invoke(this, new OnSelectedShelfChangedEventArgs{
                         selectedShelf = selectedShelf
                     });
+    }
+
+    public Transform GetFactoryObjectFollowTransform(){
+        return factoryObjectHoldPoint;
+    }
+
+    public void SetFactoryObject(FactoryObject factoryObject){
+        this.factoryObject = factoryObject;
+    }
+
+    public FactoryObject GetFactoryObject(){
+        return factoryObject;
+    }
+
+    public void ClearFactoryObject(){
+        factoryObject = null;
+    }
+
+    public bool HasFactoryObject(){
+        return factoryObject != null;
     }
 }
