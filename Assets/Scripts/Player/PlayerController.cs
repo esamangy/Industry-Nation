@@ -83,7 +83,6 @@ public class PlayerController : MonoBehaviour {
             if(hit.transform.TryGetComponent(out MediumShelf mediumShelf)){
                 if(mediumShelf != selectedShelf){
                     SetSelectedShelf(mediumShelf);
-                    Debug.Log("shelf");
                 }
             }else {
                 SetSelectedShelf(null);
