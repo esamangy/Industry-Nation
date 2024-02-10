@@ -92,7 +92,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4030750785475486363}
-  - component: {fileID: 598574768216934209}
   - component: {fileID: -2198810522431357334}
   m_Layer: 0
   m_Name: Pipe
@@ -117,27 +116,6 @@ Transform:
   - {fileID: 2133366296441787622}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &598574768216934209
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2453075920356841063}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.60959995, y: 0.057150025, z: 0.057149995}
-  m_Center: {x: 0, y: 0.028575012, z: 0}
 --- !u!114 &-2198810522431357334
 MonoBehaviour:
   m_ObjectHideFlags: 0
