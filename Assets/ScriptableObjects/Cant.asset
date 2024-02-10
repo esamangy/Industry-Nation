@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d93de82ecf60ef942956cc80670ba10b, type: 3}
+  m_Name: Cant
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 6895670227118581883, guid: cd8dc15500f06ed4c92771c49620fc8f, type: 3}
+  sprite: {fileID: 21300000, guid: f3d35beaa93f96b47a3ca0865ffac9f9, type: 3}
+  objectName: Log Cant
