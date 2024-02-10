@@ -14,6 +14,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 0da491a72f21aef45b759b15f195661a,
         type: 2}
+    - target: {fileID: 2888706364574072808, guid: d231b5fea98fad94f9ac0ceb9c19bc60,
+        type: 3}
+      propertyPath: factoryObjectSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 0da491a72f21aef45b759b15f195661a,
+        type: 2}
     - target: {fileID: 3505823100218082844, guid: d231b5fea98fad94f9ac0ceb9c19bc60,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -67,7 +73,7 @@ PrefabInstance:
     - target: {fileID: 4318106674694708390, guid: d231b5fea98fad94f9ac0ceb9c19bc60,
         type: 3}
       propertyPath: m_Name
-      value: _Iron Bar Resource Crate
+      value: Iron Bar Resource Crate
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

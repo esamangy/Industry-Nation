@@ -6,16 +6,16 @@ using UnityEngine;
 public class ResourceCrate : BaseWorkbench, IFactoryObjectParent {
 
     public event EventHandler OnPlayerGrabbedObject;
-    [SerializeField] private FactoryObjectSO FactoryObjectSO;
+    [SerializeField] private FactoryObjectSO factoryObjectSO;
     public override void Interact(PlayerController player){
         if(!player.HasFactoryObject()){
-            GameObject factoryObjectTransform = Instantiate(FactoryObjectSO.prefab);
-            factoryObjectTransform.GetComponent<FactoryObject>().SetFactoryObjectParent(player);
+            FactoryObject.SpawnFactoryObject(factoryObjectSO, player);
+            
             OnPlayerGrabbedObject?.Invoke(this, EventArgs.Empty); 
         }  
     }
 
     public FactoryObjectSO GetFactoryObjectSO(){
-        return FactoryObjectSO;
+        return factoryObjectSO;
     }
 }

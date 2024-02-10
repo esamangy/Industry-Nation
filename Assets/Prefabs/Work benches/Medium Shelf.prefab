@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemHoldPoint: {fileID: 5809975901937308780}
-  FactoryObjectSO: {fileID: 11400000, guid: d2dc38cfe37cdd74fa42441562567f80, type: 2}
+  FactoryObjectSO: {fileID: 0}
 --- !u!1 &3817444161020769745
 GameObject:
   m_ObjectHideFlags: 0

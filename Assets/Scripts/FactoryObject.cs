@@ -31,4 +31,18 @@ public class FactoryObject : MonoBehaviour {
     public IFactoryObjectParent GetFactoryObjectParent(){
         return factoryObjectParent;
     }
+
+    public void DestroySelf(){
+        factoryObjectParent.ClearFactoryObject();
+        
+        Destroy(gameObject);
+    }
+
+    public static FactoryObject SpawnFactoryObject(FactoryObjectSO factoryObjectSO, IFactoryObjectParent factoryObjectParent) {
+        GameObject factoryObjectTransform = Instantiate(factoryObjectSO.prefab);
+        FactoryObject factoryObject = factoryObjectTransform.GetComponent<FactoryObject>();
+        factoryObject.SetFactoryObjectParent(factoryObjectParent);
+
+        return factoryObject;
+    }
 }

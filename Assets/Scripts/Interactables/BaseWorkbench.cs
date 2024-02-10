@@ -9,6 +9,9 @@ public class BaseWorkbench : MonoBehaviour, IFactoryObjectParent {
     public virtual void Interact(PlayerController player){
         Debug.LogError("BaseWorkbench.Interact();");
     }
+    public virtual void InteractAlternate(PlayerController player){
+        Debug.LogError("BaseWorkbench.Interact();");
+    }
 
     public Transform GetFactoryObjectFollowTransform(){
         return ItemHoldPoint;

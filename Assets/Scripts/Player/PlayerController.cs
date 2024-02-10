@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
 
     private void Start(){
         gameInput.OnInteractAction += GameInput_OnInteractAction;
+        gameInput.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
     }
 
     private void Update(){
@@ -50,13 +51,13 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
 
         if(!canMove){
             Vector3 moveDirX = new Vector3(moveDir.x, 0, 0);
-            canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirX, moveDistance);
+            canMove = moveDir.x != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirX, moveDistance);
 
             if(canMove){
                 moveDir = moveDirX;
             } else {
                 Vector3 moveDirZ = new Vector3(moveDir.x, 0, 0);
-                canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirZ, moveDistance);
+                canMove = moveDir.z != 0 && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirZ, moveDistance);
                 if(canMove){
                     moveDir = moveDirZ;
                 }
@@ -96,6 +97,11 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
     private void GameInput_OnInteractAction(object sender, EventArgs e) {
         if(selectedBench != null){
             selectedBench.Interact(this);
+        }
+    }
+    private void GameInput_OnInteractAlternateAction(object sender, EventArgs e) {
+        if(selectedBench != null){
+            selectedBench.InteractAlternate(this);
         }
     }
     public bool IsWalking(){
