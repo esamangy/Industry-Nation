@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
     //Events
     public event EventHandler<OnSelectedShelfChangedEventArgs> OnSelectedShelfChanged;
     public class OnSelectedShelfChangedEventArgs : EventArgs{
-        public MediumShelf selectedShelf;
+        public BaseWorkbench selectedBench;
     }
 
     [SerializeField] private float moveSpeed = 7f;
@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
     [SerializeField] private Transform factoryObjectHoldPoint;
     private bool isWalking;
     private Vector3 lastInteractDir;
-    private MediumShelf selectedShelf;
+    private BaseWorkbench selectedBench;
     private FactoryObject factoryObject;
 
     private void Awake() {
@@ -82,30 +82,30 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
 
         float interactDistance = 2f;
         if(Physics.Raycast(transform.position + (Vector3.up * .1f), lastInteractDir, out RaycastHit hit, interactDistance, interactLayerMask)){
-            if(hit.transform.TryGetComponent(out MediumShelf mediumShelf)){
-                if(mediumShelf != selectedShelf){
-                    SetSelectedShelf(mediumShelf);
+            if(hit.transform.TryGetComponent(out BaseWorkbench baseWorkbench)){
+                if(baseWorkbench != selectedBench){
+                    SetSelectedBench(baseWorkbench);
                 }
             }else {
-                SetSelectedShelf(null);
+                SetSelectedBench(null);
             }
         } else {
-            SetSelectedShelf(null);
+            SetSelectedBench(null);
         }
     }
     private void GameInput_OnInteractAction(object sender, EventArgs e) {
-        if(selectedShelf != null){
-            selectedShelf.Interact(this);
+        if(selectedBench != null){
+            selectedBench.Interact(this);
         }
     }
     public bool IsWalking(){
         return isWalking;
     }
 
-    private void SetSelectedShelf(MediumShelf selectedShelf){
-        this.selectedShelf = selectedShelf;
+    private void SetSelectedBench(BaseWorkbench baseWorkbench){
+        this.selectedBench = baseWorkbench;
         OnSelectedShelfChanged?.Invoke(this, new OnSelectedShelfChangedEventArgs{
-                        selectedShelf = selectedShelf
+                        selectedBench = baseWorkbench
                     });
     }
 

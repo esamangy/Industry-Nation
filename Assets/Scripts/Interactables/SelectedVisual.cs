@@ -3,16 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MediumShelfVisual : MonoBehaviour {
+public class SelectedVisual : MonoBehaviour {
 
-    [SerializeField] private MediumShelf mediumShelf;
-    [SerializeField] private GameObject SelectedShelfVisual;
+    [SerializeField] private BaseWorkbench baseWorkbench;
+    [SerializeField] private GameObject[] VisualGameobjectArray;
     private void Start() {
         PlayerController.Instance.OnSelectedShelfChanged += PlayerController_OnSelectedShelfChanged;
     }
 
     private void PlayerController_OnSelectedShelfChanged(object sender, PlayerController.OnSelectedShelfChangedEventArgs e) {
-        if(e.selectedShelf == mediumShelf){
+        if(e.selectedBench == baseWorkbench){
             Show();
         } else {
             Hide();
@@ -20,10 +20,15 @@ public class MediumShelfVisual : MonoBehaviour {
     }
 
     private void Show(){
-        SelectedShelfVisual.SetActive(true);
+        foreach (GameObject visualGameObject in VisualGameobjectArray) {
+            visualGameObject.SetActive(true);
+        }
+        
     }
 
     private void Hide(){
-        SelectedShelfVisual.SetActive(false);
+        foreach (GameObject visualGameObject in VisualGameobjectArray) {
+            visualGameObject.SetActive(false);
+        }
     }
 }
