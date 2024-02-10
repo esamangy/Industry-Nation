@@ -8,10 +8,14 @@ public class ResourceCrate : BaseWorkbench, IFactoryObjectParent {
     public event EventHandler OnPlayerGrabbedObject;
     [SerializeField] private FactoryObjectSO FactoryObjectSO;
     public override void Interact(PlayerController player){
-        if(!HasFactoryObject()){
+        if(!player.HasFactoryObject()){
             GameObject factoryObjectTransform = Instantiate(FactoryObjectSO.prefab);
             factoryObjectTransform.GetComponent<FactoryObject>().SetFactoryObjectParent(player);
-            OnPlayerGrabbedObject?.Invoke(this, EventArgs.Empty);
-        }        
+            OnPlayerGrabbedObject?.Invoke(this, EventArgs.Empty); 
+        }  
+    }
+
+    public FactoryObjectSO GetFactoryObjectSO(){
+        return FactoryObjectSO;
     }
 }
