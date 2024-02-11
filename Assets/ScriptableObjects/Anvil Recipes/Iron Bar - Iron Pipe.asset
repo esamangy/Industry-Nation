@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   input: {fileID: 11400000, guid: 0da491a72f21aef45b759b15f195661a, type: 2}
   output: {fileID: 11400000, guid: d2dc38cfe37cdd74fa42441562567f80, type: 2}
+  anvilProgressMax: 3

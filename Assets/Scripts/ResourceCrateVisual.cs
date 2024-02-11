@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class CrateVisual : MonoBehaviour {
+public class ResourceCrateVisual : MonoBehaviour {
     private const string OPEN_CLOSE = "OpenClose";
     [SerializeField] private ResourceCrate resourceCrate;
     private Animator animator;

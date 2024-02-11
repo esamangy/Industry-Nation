@@ -6,4 +6,5 @@ using UnityEngine;
 public class AnvilRecipeSO : ScriptableObject {
     public FactoryObjectSO input;
     public FactoryObjectSO output;
+    public int anvilProgressMax;
 }
