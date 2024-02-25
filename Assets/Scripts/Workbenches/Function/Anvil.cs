@@ -3,13 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Anvil : BaseWorkbench{
-
-    public event EventHandler<OnProgressChangedEventArgs> OnProgressChanged;
+public class Anvil : BaseWorkbench, IHasProgress{
     public event EventHandler OnHammer;
-    public class OnProgressChangedEventArgs : EventArgs{
-        public float progressNormalized;
-    }
+    public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
     [SerializeField] private AnvilRecipeSO[] AnvilRecipeSOArray;
     private int anvilProgress;
     public override void Interact(PlayerController player) {
@@ -20,7 +16,7 @@ public class Anvil : BaseWorkbench{
                     anvilProgress = 0;
                     AnvilRecipeSO anvilRecipeSO = GetAnvilRecipeSOWithInput(GetFactoryObject().GetFactoryObjectSO());
 
-                    OnProgressChanged?.Invoke(this, new OnProgressChangedEventArgs{
+                    OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs{
                         progressNormalized = (float)anvilProgress / anvilRecipeSO.anvilProgressMax
                     });
                 }
@@ -41,7 +37,7 @@ public class Anvil : BaseWorkbench{
 
             AnvilRecipeSO anvilRecipeSO = GetAnvilRecipeSOWithInput(GetFactoryObject().GetFactoryObjectSO());
 
-            OnProgressChanged?.Invoke(this, new OnProgressChangedEventArgs{
+            OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs{
                         progressNormalized = (float)anvilProgress / anvilRecipeSO.anvilProgressMax
                     });
 

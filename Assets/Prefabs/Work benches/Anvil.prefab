@@ -63,7 +63,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6819738933257141281}
-  - {fileID: 1872752659122475275}
+  - {fileID: 8367510408210238663}
   - {fileID: 627986604465190850}
   - {fileID: 7916328185428687361}
   m_Father: {fileID: 0}
@@ -118,7 +118,7 @@ GameObject:
   - component: {fileID: 5588704138353881606}
   - component: {fileID: 1898404999037998069}
   m_Layer: 0
-  m_Name: Anvil
+  m_Name: Anvil Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,38 +190,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anvil: {fileID: 4273496275073726141}
---- !u!1 &6639643197488136192
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1872752659122475275}
-  m_Layer: 0
-  m_Name: Selected
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1872752659122475275
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6639643197488136192}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.01, y: 1.01, z: 1.01}
-  m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 8367510408210238663}
-  m_Father: {fileID: 7615349398033381477}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8317955079294937737
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,12 +250,12 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 0.25, z: 0.75}
+  m_LocalScale: {x: 1.515, y: 0.2525, z: 0.7575}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5799758764227534643}
   - {fileID: 8486297559173771628}
-  m_Father: {fileID: 1872752659122475275}
+  m_Father: {fileID: 7615349398033381477}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8252964834986372936
 MonoBehaviour:
@@ -482,6 +450,11 @@ PrefabInstance:
       propertyPath: anvil
       value: 
       objectReference: {fileID: 4273496275073726141}
+    - target: {fileID: 7436891718733646544, guid: 2a3726b5d9068154aac5ce05d93edc95,
+        type: 3}
+      propertyPath: hasProgressGameObject
+      value: 
+      objectReference: {fileID: 5596756219929373168}
     - target: {fileID: 7778243209571812991, guid: 2a3726b5d9068154aac5ce05d93edc95,
         type: 3}
       propertyPath: m_Name

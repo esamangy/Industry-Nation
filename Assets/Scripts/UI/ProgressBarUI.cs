@@ -6,17 +6,22 @@ using UnityEngine.UI;
 
 public class ProgressBarUI : MonoBehaviour {
 
-    [SerializeField] private Anvil anvil;
+    [SerializeField] GameObject hasProgressGameObject;
     [SerializeField] private Image barImage;
+    private IHasProgress hasProgress;
 
     private void Start() {
-        anvil.OnProgressChanged += Anvil_OnProgressChanged;
+        hasProgress = hasProgressGameObject.GetComponent<IHasProgress>();
+        if(hasProgress == null){
+            throw new Exception("Game Object " + hasProgressGameObject + " does not have a component that implements IHasProgress");
+        }
+        hasProgress.OnProgressChanged += HasProgress_OnProgressChanged;
 
         barImage.fillAmount = 0f;
         Hide();
     }
 
-    private void Anvil_OnProgressChanged(object sender, Anvil.OnProgressChangedEventArgs e) {
+    private void HasProgress_OnProgressChanged(object sender, IHasProgress.OnProgressChangedEventArgs e) {
         barImage.fillAmount = e.progressNormalized;
 
         if(e.progressNormalized == 0f || e.progressNormalized == 1f){

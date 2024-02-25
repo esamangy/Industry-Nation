@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d93de82ecf60ef942956cc80670ba10b, type: 3}
+  m_Name: Ruined Plank
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 1610837336104914975, guid: d1b0d126cc84e434d8c4b548181dcce8, type: 3}
+  sprite: {fileID: 21300000, guid: 5936414904ca44b4b8db81a5d3bed009, type: 3}
+  objectName: Ruined Plank

@@ -10,7 +10,7 @@ public class BaseWorkbench : MonoBehaviour, IFactoryObjectParent {
         Debug.LogError("BaseWorkbench.Interact();");
     }
     public virtual void InteractAlternate(PlayerController player){
-        Debug.LogError("BaseWorkbench.Interact();");
+        //Debug.LogError("BaseWorkbench.Interact();");
     }
 
     public Transform GetFactoryObjectFollowTransform(){
