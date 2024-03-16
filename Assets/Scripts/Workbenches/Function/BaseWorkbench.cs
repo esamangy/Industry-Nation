@@ -19,6 +19,9 @@ public class BaseWorkbench : MonoBehaviour, IFactoryObjectParent {
 
     public void SetFactoryObject(FactoryObject factoryObject){
         this.factoryObject = factoryObject;
+        if(factoryObject.TryGetBox(out BoxFactoryObject boxFactoryObject)){
+            boxFactoryObject.TryClose();
+        }
     }
 
     public FactoryObject GetFactoryObject(){

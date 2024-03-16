@@ -109,10 +109,10 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
     }
 
     private void SetSelectedBench(BaseWorkbench baseWorkbench){
-        this.selectedBench = baseWorkbench;
+        selectedBench = baseWorkbench;
         OnSelectedShelfChanged?.Invoke(this, new OnSelectedShelfChangedEventArgs{
-                        selectedBench = baseWorkbench
-                    });
+            selectedBench = baseWorkbench
+        });
     }
 
     public Transform GetFactoryObjectFollowTransform(){
@@ -121,6 +121,9 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
 
     public void SetFactoryObject(FactoryObject factoryObject){
         this.factoryObject = factoryObject;
+        if(factoryObject.TryGetBox(out BoxFactoryObject boxFactoryObject)){
+            boxFactoryObject.TryOpen();
+        }
     }
 
     public FactoryObject GetFactoryObject(){
