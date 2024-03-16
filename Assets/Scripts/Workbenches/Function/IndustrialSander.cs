@@ -87,7 +87,23 @@ public class IndustrialSander : BaseWorkbench, IHasProgress {
                 }
             }
         } else {
-            if(!player.HasFactoryObject()){
+            //there is a factory object here
+            if(player.HasFactoryObject()){
+                //the player is carrying something
+                if(player.GetFactoryObject().TryGetBox(out BoxFactoryObject boxFactoryObject)){
+                    //player is holding a box
+                    if(boxFactoryObject.TryAddItem(GetFactoryObject().GetFactoryObjectSO())){
+                        GetFactoryObject().DestroySelf();
+
+                        ChangeState(State.Idle);
+
+                        OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs{
+                            progressNormalized = 0f
+                        });
+                    }
+                }
+            } else {
+                //the player is not carrying anything
                 GetFactoryObject().SetFactoryObjectParent(player);
 
                 ChangeState(State.Idle);

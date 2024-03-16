@@ -23,7 +23,17 @@ public class Anvil : BaseWorkbench, IHasProgress{
                 
             }
         } else {
-            if(!player.HasFactoryObject()){
+            //there is a factory object here
+            if(player.HasFactoryObject()){
+                //the player is carrying something
+                if(player.GetFactoryObject().TryGetBox(out BoxFactoryObject boxFactoryObject)){
+                    //player is holding a box
+                    if(boxFactoryObject.TryAddItem(GetFactoryObject().GetFactoryObjectSO())){
+                        GetFactoryObject().DestroySelf();
+                    }
+                }
+            } else {
+                //the player is not carrying something
                 GetFactoryObject().SetFactoryObjectParent(player);
             }
         }

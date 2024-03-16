@@ -38,6 +38,16 @@ public class FactoryObject : MonoBehaviour {
         Destroy(gameObject);
     }
 
+    public bool TryGetBox(out BoxFactoryObject boxFactoryObject){
+        if(this is BoxFactoryObject) {
+            boxFactoryObject = this as BoxFactoryObject;
+            return true;
+        } else {
+            boxFactoryObject = null;
+            return false;
+        }
+    }
+
     public static FactoryObject SpawnFactoryObject(FactoryObjectSO factoryObjectSO, IFactoryObjectParent factoryObjectParent) {
         GameObject factoryObjectTransform = Instantiate(factoryObjectSO.prefab);
         FactoryObject factoryObject = factoryObjectTransform.GetComponent<FactoryObject>();
