@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &1552363607472802528
+--- !u!1001 &2303109941992171708
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8,33 +8,77 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 209791211569904425, guid: a279529c30587834187e91eecc379e22,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 344a15d0f6dbbc0469ccbc02ce0469f2, type: 2}
     - target: {fileID: 275214890628635391, guid: a279529c30587834187e91eecc379e22,
         type: 3}
       propertyPath: m_Name
-      value: Ruined Plank
+      value: Sanded Planks
       objectReference: {fileID: 0}
     - target: {fileID: 1009425115909740797, guid: a279529c30587834187e91eecc379e22,
         type: 3}
       propertyPath: m_Name
-      value: Ruined Plank
+      value: Sanded Plank
       objectReference: {fileID: 0}
     - target: {fileID: 1586572044245102101, guid: a279529c30587834187e91eecc379e22,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: -1444460858095362738, guid: 77e73c0b97f9019428efa5d56b7495de,
+      objectReference: {fileID: 2100000, guid: 344a15d0f6dbbc0469ccbc02ce0469f2, type: 2}
+    - target: {fileID: 2303881727715888440, guid: a279529c30587834187e91eecc379e22,
         type: 3}
+      propertyPath: m_Name
+      value: Sanded Plank
+      objectReference: {fileID: 0}
     - target: {fileID: 3391248124280876127, guid: a279529c30587834187e91eecc379e22,
         type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.01
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
       objectReference: {fileID: 0}
+    - target: {fileID: 3391248124280876127, guid: a279529c30587834187e91eecc379e22,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3391248124280876127, guid: a279529c30587834187e91eecc379e22,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3391248124280876127, guid: a279529c30587834187e91eecc379e22,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3391248124280876127, guid: a279529c30587834187e91eecc379e22,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4083682234073632441, guid: a279529c30587834187e91eecc379e22,
+        type: 3}
+      propertyPath: m_Name
+      value: Sanded Plank
+      objectReference: {fileID: 0}
+    - target: {fileID: 4474536447718741327, guid: a279529c30587834187e91eecc379e22,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 344a15d0f6dbbc0469ccbc02ce0469f2, type: 2}
     - target: {fileID: 5951121263254033995, guid: a279529c30587834187e91eecc379e22,
         type: 3}
       propertyPath: factoryObjectSO
       value: 
-      objectReference: {fileID: 11400000, guid: eacfd4cea0a675d4b94a62883301a10e,
+      objectReference: {fileID: 11400000, guid: 7ab1fd8ebf65031459496d0349d0a501,
         type: 2}
+    - target: {fileID: 7242377474159667917, guid: a279529c30587834187e91eecc379e22,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 344a15d0f6dbbc0469ccbc02ce0469f2, type: 2}
     - target: {fileID: 7529848511101981970, guid: a279529c30587834187e91eecc379e22,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -58,17 +102,17 @@ PrefabInstance:
     - target: {fileID: 7529848511101981970, guid: a279529c30587834187e91eecc379e22,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7529848511101981970, guid: a279529c30587834187e91eecc379e22,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7529848511101981970, guid: a279529c30587834187e91eecc379e22,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7529848511101981970, guid: a279529c30587834187e91eecc379e22,
         type: 3}
