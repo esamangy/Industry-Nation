@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,10 @@ public class BoxFactoryObject : FactoryObject {
     private enum State{
         Open,
         Close
+    }
+    public event EventHandler<OnItemAddedEventArgs> OnItemAdded;
+    public class OnItemAddedEventArgs : EventArgs {
+        public FactoryObjectSO factoryObjectSO;
     }
     private State currentState;
     private void Awake() {
@@ -27,8 +32,15 @@ public class BoxFactoryObject : FactoryObject {
             return false;
         } else {
             factoryObjectSOList.Add(factoryObjectSO);
+            OnItemAdded?.Invoke(this, new OnItemAddedEventArgs{
+                factoryObjectSO = factoryObjectSO
+            });
             return true;
         }
+    }
+
+    public List<FactoryObjectSO> GetFactoryObjectSOList(){
+        return factoryObjectSOList;
     }
 
     public void TryOpen(){
