@@ -28,15 +28,11 @@ public class BoxFactoryObject : FactoryObject {
             //not a valid item
             return false;
         }
-        if(factoryObjectSOList.Contains(factoryObjectSO)){
-            return false;
-        } else {
-            factoryObjectSOList.Add(factoryObjectSO);
-            OnItemAdded?.Invoke(this, new OnItemAddedEventArgs{
-                factoryObjectSO = factoryObjectSO
-            });
-            return true;
-        }
+        factoryObjectSOList.Add(factoryObjectSO);
+        OnItemAdded?.Invoke(this, new OnItemAddedEventArgs{
+            factoryObjectSO = factoryObjectSO
+        });
+        return true;
     }
 
     public List<FactoryObjectSO> GetFactoryObjectSOList(){
