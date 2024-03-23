@@ -14,8 +14,7 @@ public class IndustrialSanderVisual : MonoBehaviour {
     [SerializeField] private Material RuinMaterial;
     private MeshRenderer meshRenderer;
 
-    private void Awake()
-    {
+    private void Awake() {
         meshRenderer = GetComponent<MeshRenderer>();
     }
 
