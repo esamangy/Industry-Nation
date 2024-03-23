@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5c6a588d69e4e54a81db39c98e0a681, type: 3}
-  m_Name: ChairRecipe
+  m_Script: {fileID: 11500000, guid: d93de82ecf60ef942956cc80670ba10b, type: 3}
+  m_Name: Fabric
   m_EditorClassIdentifier: 
-  input: {fileID: 11400000, guid: 7ab1fd8ebf65031459496d0349d0a501, type: 2}
-  output: {fileID: 11400000, guid: 769d377f11b60d94bbd0674fd52dd845, type: 2}
-  workbenchProgressMax: 6
+  prefab: {fileID: 5890280206057651413, guid: 9b8abd2beb99a7c4ea3f67978a55b2cd, type: 3}
+  sprite: {fileID: 21300000, guid: 1e23d892efb961644b9191fab3a368f5, type: 3}
+  objectName: Fabric

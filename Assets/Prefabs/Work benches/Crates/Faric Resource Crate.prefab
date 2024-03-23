@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2552678250355414395
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2888706364574072808, guid: d231b5fea98fad94f9ac0ceb9c19bc60,
+        type: 3}
+      propertyPath: factoryObjectSO
+      value: 
+      objectReference: {fileID: 11400000, guid: eff635aae6b1a4b4cb34d0f5dd426a0f,
+        type: 2}
+    - target: {fileID: 3505823100218082844, guid: d231b5fea98fad94f9ac0ceb9c19bc60,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3505823100218082844, guid: d231b5fea98fad94f9ac0ceb9c19bc60,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3505823100218082844, guid: d231b5fea98fad94f9ac0ceb9c19bc60,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3505823100218082844, guid: d231b5fea98fad94f9ac0ceb9c19bc60,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3505823100218082844, guid: d231b5fea98fad94f9ac0ceb9c19bc60,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3505823100218082844, guid: d231b5fea98fad94f9ac0ceb9c19bc60,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3505823100218082844, guid: d231b5fea98fad94f9ac0ceb9c19bc60,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3505823100218082844, guid: d231b5fea98fad94f9ac0ceb9c19bc60,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3505823100218082844, guid: d231b5fea98fad94f9ac0ceb9c19bc60,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3505823100218082844, guid: d231b5fea98fad94f9ac0ceb9c19bc60,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4318106674694708390, guid: d231b5fea98fad94f9ac0ceb9c19bc60,
+        type: 3}
+      propertyPath: m_Name
+      value: Faric Resource Crate
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d231b5fea98fad94f9ac0ceb9c19bc60, type: 3}
