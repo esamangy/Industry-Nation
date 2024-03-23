@@ -108,6 +108,10 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
         return isWalking;
     }
 
+    public GameInput GetGameInput(){
+        return gameInput;
+    }
+
     private void SetSelectedBench(BaseWorkbench baseWorkbench){
         selectedBench = baseWorkbench;
         OnSelectedShelfChanged?.Invoke(this, new OnSelectedShelfChangedEventArgs{

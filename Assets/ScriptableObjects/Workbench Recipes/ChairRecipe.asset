@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5c6a588d69e4e54a81db39c98e0a681, type: 3}
   m_Name: ChairRecipe
   m_EditorClassIdentifier: 
-  input: {fileID: 0}
-  output: {fileID: 0}
-  anvilProgressMax: 0
+  input: {fileID: 11400000, guid: 7ab1fd8ebf65031459496d0349d0a501, type: 2}
+  output: {fileID: 11400000, guid: 9834e53e0a42b894582045377a2dc7ab, type: 2}
+  workbenchProgressMax: 10

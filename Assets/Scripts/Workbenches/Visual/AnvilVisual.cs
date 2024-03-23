@@ -20,4 +20,8 @@ public class AnvilVisual : MonoBehaviour {
     private void Anvil_OnPlayerGrabbedObject(object sender, EventArgs e) {
         animator.SetTrigger(HAMMER);
     }
+
+    private void OnDisable() {
+        anvil.OnHammer -= Anvil_OnPlayerGrabbedObject;
+    }
 }
