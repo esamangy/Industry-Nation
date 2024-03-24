@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DeliveryManager : MonoBehaviour {
+    public event EventHandler OnOrderSpawned;
+    public event EventHandler OnOrderCompleted;
     public static DeliveryManager Instance{get; private set;}
     [SerializeField] private OrderListSO orderListSO;
     private List<OrderSO> waitingOrderSOList;
@@ -19,9 +22,10 @@ public class DeliveryManager : MonoBehaviour {
             spawnOrderTimer = spawnOrderTimerMax;
 
             if(waitingOrderSOList.Count < waitingOrdersMax){
-                OrderSO waitingOrderSO = orderListSO.orderSOList[Random.Range(0, orderListSO.orderSOList.Count)];
-                print(waitingOrderSO.name);
+                OrderSO waitingOrderSO = orderListSO.orderSOList[UnityEngine.Random.Range(0, orderListSO.orderSOList.Count)];
                 waitingOrderSOList.Add(waitingOrderSO);
+
+                OnOrderSpawned?.Invoke(this, EventArgs.Empty);
             }
         }
     }
@@ -69,12 +73,15 @@ public class DeliveryManager : MonoBehaviour {
             }
             if(deliveredMatchesWaiting){
                 //player deliered a correct order
-                Debug.Log("player delivered a correct order");
                 waitingOrderSOList.RemoveAt(i);
+                OnOrderCompleted?.Invoke(this, EventArgs.Empty);
                 return;
             }
         }
         //player deliered an incorrect order
-        Debug.Log("Player did not deliver a correct order");
+    }
+
+    public List<OrderSO> GetWaitingOrderSOList(){
+        return waitingOrderSOList;
     }
 }
