@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Anvil : BaseWorkbench, IHasProgress{
+    public static event EventHandler OnAnyHammer;
     public event EventHandler OnHammer;
     public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
     [SerializeField] private AnvilRecipeSO[] AnvilRecipeSOArray;
@@ -43,6 +44,7 @@ public class Anvil : BaseWorkbench, IHasProgress{
         if(HasFactoryObject() && HasRecipeWithInput(GetFactoryObject().GetFactoryObjectSO())){
             anvilProgress ++;
 
+            OnAnyHammer?.Invoke(this, EventArgs.Empty);
             OnHammer?.Invoke(this, EventArgs.Empty);
 
             AnvilRecipeSO anvilRecipeSO = GetAnvilRecipeSOWithInput(GetFactoryObject().GetFactoryObjectSO());

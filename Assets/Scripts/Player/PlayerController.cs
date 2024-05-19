@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour, IFactoryObjectParent {
     public static PlayerController Instance{get; private set;}
     //Events
+    public event EventHandler OnGrabbedSomething;
     public event EventHandler<OnSelectedShelfChangedEventArgs> OnSelectedShelfChanged;
     public class OnSelectedShelfChangedEventArgs : EventArgs{
         public BaseWorkbench selectedBench;
@@ -125,6 +126,9 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
 
     public void SetFactoryObject(FactoryObject factoryObject){
         this.factoryObject = factoryObject;
+        if(factoryObject != null){
+            OnGrabbedSomething?.Invoke(this, EventArgs.Empty);
+        }
         if(factoryObject.TryGetBox(out BoxFactoryObject boxFactoryObject)){
             boxFactoryObject.TryOpen();
         }

@@ -9,6 +9,9 @@ public class AudioClipsRefrencesSO : ScriptableObject {
     public AudioClip[] orderFail;
     public AudioClip[] orderSuccess;
     public AudioClip[] footstep;
+    public AudioClip[] objectPickup;
+    public AudioClip[] objectDrop;
+    public AudioClip[] trash;
     //add ones for all the sawing
 
 }

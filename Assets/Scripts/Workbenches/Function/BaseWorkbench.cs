@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BaseWorkbench : MonoBehaviour, IFactoryObjectParent {
+    public static event EventHandler OnAnyObjectPlacedHere;
     [SerializeField] private Transform ItemHoldPoint;
     private FactoryObject factoryObject;
 
@@ -19,6 +21,9 @@ public class BaseWorkbench : MonoBehaviour, IFactoryObjectParent {
 
     public void SetFactoryObject(FactoryObject factoryObject){
         this.factoryObject = factoryObject;
+        if(factoryObject != null){
+            OnAnyObjectPlacedHere?.Invoke(this, EventArgs.Empty);
+        }
         if(factoryObject.TryGetBox(out BoxFactoryObject boxFactoryObject)){
             boxFactoryObject.TryClose();
         }

@@ -8,13 +8,39 @@ public class SoundManager : MonoBehaviour {
     private void Start() {
         DeliveryManager.Instance.OnOrderSuccess += DeliveryManager_OnOrderSuccess;
         DeliveryManager.Instance.OnOrderFailed += DeliveryManager_OnOrderFailed;
+        Anvil.OnAnyHammer += Anvil_OnAnyHammer;
+        PlayerController.Instance.OnGrabbedSomething += PlayerController_OnGrabbedSomething;
+        BaseWorkbench.OnAnyObjectPlacedHere += BaseWorkbench_OnAnyObjectPlacedHere;
+        TrashCan.OnAnyObjectTrashed += TrashCan_OnAnyObjectTrashed;
+    }
+
+    private void TrashCan_OnAnyObjectTrashed(object sender, EventArgs e) {
+        //TrashCan trashCan = sender as TrashCan;
+        PlaySound(audioClipsRefrencesSO.trash, Camera.main.transform.position);
+    }
+
+    private void BaseWorkbench_OnAnyObjectPlacedHere(object sender, EventArgs e) {
+        //BaseWorkbench baseWorkbench = sender as BaseWorkbench;
+        PlaySound(audioClipsRefrencesSO.objectDrop, Camera.main.transform.position);
+    }
+
+    private void PlayerController_OnGrabbedSomething(object sender, EventArgs e) {
+        //PlaySound(audioClipsRefrencesSO.objectPickup, PlayerController.Instance.transform.position);
+        PlaySound(audioClipsRefrencesSO.objectPickup, Camera.main.transform.position);
+    }
+
+    private void Anvil_OnAnyHammer(object sender, EventArgs e) {
+        Anvil anvil = sender as Anvil;
+        PlaySound(audioClipsRefrencesSO.anvil, anvil.transform.position);
     }
 
     private void DeliveryManager_OnOrderFailed(object sender, EventArgs e) {
+        //LoadingDock loadingDock = LoadingDock.Instance;
         PlaySound(audioClipsRefrencesSO.orderFail, Camera.main.transform.position);
     }
 
     private void DeliveryManager_OnOrderSuccess(object sender, EventArgs e) {
+        //LoadingDock loadingDock = LoadingDock.Instance;
         PlaySound(audioClipsRefrencesSO.orderSuccess, Camera.main.transform.position);
     }
 
