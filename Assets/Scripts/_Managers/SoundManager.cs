@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour {
     [SerializeField] private AudioClipsRefrencesSO audioClipsRefrencesSO;
+    public static SoundManager Instance{get; private set;}
+
+    private void Awake() {
+        Instance = this;
+    }
     private void Start() {
         DeliveryManager.Instance.OnOrderSuccess += DeliveryManager_OnOrderSuccess;
         DeliveryManager.Instance.OnOrderFailed += DeliveryManager_OnOrderFailed;
@@ -15,18 +20,17 @@ public class SoundManager : MonoBehaviour {
     }
 
     private void TrashCan_OnAnyObjectTrashed(object sender, EventArgs e) {
-        //TrashCan trashCan = sender as TrashCan;
-        PlaySound(audioClipsRefrencesSO.trash, Camera.main.transform.position);
+        TrashCan trashCan = sender as TrashCan;
+        PlaySound(audioClipsRefrencesSO.trash, trashCan.transform.position);
     }
 
     private void BaseWorkbench_OnAnyObjectPlacedHere(object sender, EventArgs e) {
-        //BaseWorkbench baseWorkbench = sender as BaseWorkbench;
-        PlaySound(audioClipsRefrencesSO.objectDrop, Camera.main.transform.position);
+        BaseWorkbench baseWorkbench = sender as BaseWorkbench;
+        PlaySound(audioClipsRefrencesSO.objectDrop, baseWorkbench.transform.position);
     }
 
     private void PlayerController_OnGrabbedSomething(object sender, EventArgs e) {
-        //PlaySound(audioClipsRefrencesSO.objectPickup, PlayerController.Instance.transform.position);
-        PlaySound(audioClipsRefrencesSO.objectPickup, Camera.main.transform.position);
+        PlaySound(audioClipsRefrencesSO.objectPickup, PlayerController.Instance.transform.position);
     }
 
     private void Anvil_OnAnyHammer(object sender, EventArgs e) {
@@ -35,13 +39,13 @@ public class SoundManager : MonoBehaviour {
     }
 
     private void DeliveryManager_OnOrderFailed(object sender, EventArgs e) {
-        //LoadingDock loadingDock = LoadingDock.Instance;
-        PlaySound(audioClipsRefrencesSO.orderFail, Camera.main.transform.position);
+        LoadingDock loadingDock = LoadingDock.Instance;
+        PlaySound(audioClipsRefrencesSO.orderFail, loadingDock.transform.position);
     }
 
     private void DeliveryManager_OnOrderSuccess(object sender, EventArgs e) {
-        //LoadingDock loadingDock = LoadingDock.Instance;
-        PlaySound(audioClipsRefrencesSO.orderSuccess, Camera.main.transform.position);
+        LoadingDock loadingDock = LoadingDock.Instance;
+        PlaySound(audioClipsRefrencesSO.orderSuccess, loadingDock.transform.position);
     }
 
     private void PlaySound(AudioClip[] audioClipArray, Vector3 position, float volume = 1f){
@@ -50,5 +54,9 @@ public class SoundManager : MonoBehaviour {
 
     private void PlaySound(AudioClip audioClip, Vector3 position, float volume = 1f){
         AudioSource.PlayClipAtPoint(audioClip, position, volume);
+    }
+
+    public void PlayFootstepsSound(Vector3 position, float volume){
+        PlaySound(audioClipsRefrencesSO.footstep, position, volume);
     }
 }

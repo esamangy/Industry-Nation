@@ -23,3 +23,9 @@ MonoBehaviour:
   footstep:
   - {fileID: 8300000, guid: e369377d02bb7ed43b8fb50a6a00b888, type: 3}
   - {fileID: 8300000, guid: 68a142dfd568b5d4e8c44a41368c66ac, type: 3}
+  objectPickup:
+  - {fileID: 8300000, guid: 7bfefab372bcfcc438c07cf535d2948a, type: 3}
+  objectDrop:
+  - {fileID: 8300000, guid: 5db9fdcbe3e3d9b46a64e4ad522f7f2f, type: 3}
+  trash:
+  - {fileID: 8300000, guid: a3dcd244996f2664bbd6bd07b900931a, type: 3}
