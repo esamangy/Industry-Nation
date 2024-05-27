@@ -46,7 +46,6 @@ public class GameManager : MonoBehaviour {
             case State.GameOver:
                 break;
         }
-        print(currentState);
     }
 
     private void ChangeState(State newState){
