@@ -96,11 +96,17 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
         }
     }
     private void GameInput_OnInteractAction(object sender, EventArgs e) {
+        if(!GameManager.Instance.IsGamePlaying()){
+            return;
+        }
         if(selectedBench != null){
             selectedBench.Interact(this);
         }
     }
     private void GameInput_OnInteractAlternateAction(object sender, EventArgs e) {
+        if(!GameManager.Instance.IsGamePlaying()){
+            return;
+        }
         if(selectedBench != null){
             selectedBench.InteractAlternate(this);
         }
