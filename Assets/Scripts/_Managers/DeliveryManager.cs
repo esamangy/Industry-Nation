@@ -14,6 +14,7 @@ public class DeliveryManager : MonoBehaviour {
     private int waitingOrdersMax = 5;
     private float spawnOrderTimer;
     private float spawnOrderTimerMax = 5f;
+    private int successfulOrdersAmount;
     private void Awake() {
         Instance = this;
         waitingOrderSOList = new List<OrderSO>();
@@ -75,9 +76,13 @@ public class DeliveryManager : MonoBehaviour {
             }
             if(deliveredMatchesWaiting){
                 //player deliered a correct order
+                successfulOrdersAmount ++;
+
                 waitingOrderSOList.RemoveAt(i);
+
                 OnOrderCompleted?.Invoke(this, EventArgs.Empty);
                 OnOrderSuccess?.Invoke(this, EventArgs.Empty);
+
                 return;
             }
         }
@@ -87,5 +92,9 @@ public class DeliveryManager : MonoBehaviour {
 
     public List<OrderSO> GetWaitingOrderSOList(){
         return waitingOrderSOList;
+    }
+
+    public int GetSuccessfulOrdersAmount(){
+        return successfulOrdersAmount;
     }
 }
