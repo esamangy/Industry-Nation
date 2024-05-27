@@ -9,14 +9,31 @@ public class GameInput : MonoBehaviour{
     public event EventHandler OnInteractAction;
     public event EventHandler OnInteractAlternateAction;
     public event EventHandler OnInteractAlternateActionStopped;
+    public event EventHandler OnPausedAction;
     private PlayerInputActions playerInput;
+    public static GameInput Instance{get; private set;}
     private void Awake() {
+        Instance = this;
         playerInput = new PlayerInputActions();
         playerInput.Player.Enable();
 
         playerInput.Player.Interact.performed += Interact_performed;
         playerInput.Player.InteractAlternate.started += InteractAlternate_Started;
         playerInput.Player.InteractAlternate.canceled += InteractAlternate_Canceled;
+        playerInput.Player.Pause.performed += Pause_Performed;
+    }
+
+    private void OnDestroy() {
+        playerInput.Player.Interact.performed -= Interact_performed;
+        playerInput.Player.InteractAlternate.started -= InteractAlternate_Started;
+        playerInput.Player.InteractAlternate.canceled -= InteractAlternate_Canceled;
+        playerInput.Player.Pause.performed -= Pause_Performed;
+
+        playerInput.Dispose();
+    }
+
+    private void Pause_Performed(InputAction.CallbackContext context) {
+        OnPausedAction?.Invoke(this, EventArgs.Empty);
     }
 
     private void InteractAlternate_Canceled(InputAction.CallbackContext context) {

@@ -6,6 +6,9 @@ using UnityEngine;
 public class Anvil : BaseWorkbench, IHasProgress{
     public static event EventHandler OnAnyHammer;
     public event EventHandler OnHammer;
+    new public static void ResetStaticData(){
+        OnAnyHammer = null;
+    }
     public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
     [SerializeField] private AnvilRecipeSO[] AnvilRecipeSOArray;
     private int anvilProgress;
