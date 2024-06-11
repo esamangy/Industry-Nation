@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BaseUI : MonoBehaviour {
 
-    protected void Show(){
+    public void Show(){
         gameObject.SetActive(true);
     }
 
-    protected void Hide(){
+    public void Hide(){
         gameObject.SetActive(false);
     }
 
