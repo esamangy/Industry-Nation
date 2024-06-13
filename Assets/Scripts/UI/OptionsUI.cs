@@ -16,6 +16,9 @@ public class OptionsUI : BaseUI {
     [SerializeField] private Button interactButton;
     [SerializeField] private Button interactAltButton;
     [SerializeField] private Button pauseButton;
+    [SerializeField] private Button gamepadInteractButton;
+    [SerializeField] private Button gamepadInteractAltButton;
+    [SerializeField] private Button gamepadPauseButton;
     [SerializeField] private TextMeshProUGUI soundEffectsText;
     [SerializeField] private TextMeshProUGUI musicText;
     [SerializeField] private TextMeshProUGUI moveUpText;
@@ -25,7 +28,11 @@ public class OptionsUI : BaseUI {
     [SerializeField] private TextMeshProUGUI interactText;
     [SerializeField] private TextMeshProUGUI interactAltText;
     [SerializeField] private TextMeshProUGUI pauseText;
+    [SerializeField] private TextMeshProUGUI gamepadInteractText;
+    [SerializeField] private TextMeshProUGUI gamepadInteractAltText;
+    [SerializeField] private TextMeshProUGUI gamepadPauseText;
     [SerializeField] private Transform pressToRebindKey;
+    private Action onCloseButtonAction;
     private void Awake() {
         soundEffectsButton.onClick.AddListener(() => {
             SoundManager.Instance.ChangeVolume();
@@ -37,6 +44,7 @@ public class OptionsUI : BaseUI {
         });
         closeButton.onClick.AddListener(() => {
             Hide();
+            onCloseButtonAction();
         });
 
         moveUpButton.onClick.AddListener(() => RebindBinding(GameInput.Binding.Move_Up));
@@ -46,6 +54,9 @@ public class OptionsUI : BaseUI {
         interactButton.onClick.AddListener(() => RebindBinding(GameInput.Binding.Interact));
         interactAltButton.onClick.AddListener(() => RebindBinding(GameInput.Binding.Interact_Alt));
         pauseButton.onClick.AddListener(() => RebindBinding(GameInput.Binding.Pause));
+        gamepadInteractButton.onClick.AddListener(() => RebindBinding(GameInput.Binding.Gamepad_Interact));
+        gamepadInteractAltButton.onClick.AddListener(() => RebindBinding(GameInput.Binding.Gamepad_Interact_Alt));
+        gamepadPauseButton.onClick.AddListener(() => RebindBinding(GameInput.Binding.Gamepad_Pause));
     }
 
     private void Start() {
@@ -53,6 +64,15 @@ public class OptionsUI : BaseUI {
         UpdateVisual();
         Hide();
         HidePressToRebindKey();
+    }
+
+    public override void Show(){
+        base.Show();
+        soundEffectsButton.Select();
+    }
+    public void Show(Action onCloseButtonAction){
+        this.onCloseButtonAction = onCloseButtonAction;
+        Show();
     }
 
     private void GameManager_OnGameUnpaused(object sender, EventArgs e) {
@@ -70,6 +90,9 @@ public class OptionsUI : BaseUI {
         interactText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Interact);
         interactAltText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Interact_Alt);
         pauseText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Pause);
+        gamepadInteractText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Gamepad_Interact);
+        gamepadInteractAltText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Gamepad_Interact_Alt);
+        gamepadPauseText.text = GameInput.Instance.GetBindingText(GameInput.Binding.Gamepad_Pause);
     }
 
     private void RebindBinding(GameInput.Binding binding){

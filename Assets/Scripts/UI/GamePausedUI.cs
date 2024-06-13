@@ -17,7 +17,8 @@ public class GamePausedUI : BaseUI {
             Loader.Load(Loader.Scene.MainMenuScene);
         });
         optionsButton.onClick.AddListener(() => {
-            optionsMenu.Show();
+            Hide();
+            optionsMenu.Show(Show);
         });
     }
 
@@ -26,6 +27,11 @@ public class GamePausedUI : BaseUI {
         GameManager.Instance.OnGameUnpaused += GameManager_OnGameUnpaused;
 
         Hide();
+    }
+
+    public override void Show(){
+        base.Show();
+        resumeButton.Select();
     }
 
     private void GameManager_OnGameUnpaused(object sender, EventArgs e) {
