@@ -28,3 +28,5 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5db9fdcbe3e3d9b46a64e4ad522f7f2f, type: 3}
   trash:
   - {fileID: 8300000, guid: a3dcd244996f2664bbd6bd07b900931a, type: 3}
+  warning:
+  - {fileID: 8300000, guid: 08509b1d6cde9684293953664b34e296, type: 3}

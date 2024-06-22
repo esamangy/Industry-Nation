@@ -7,11 +7,11 @@ public class SoundManager : MonoBehaviour {
     private const string SOUND_EFFECTS_VOLUME = "SoundEffectsVolume";
     [SerializeField] private AudioClipsRefrencesSO audioClipsRefrencesSO;
     public static SoundManager Instance{get; private set;}
-    private float volume = .5f;
+    private float sfxVolume = .5f;
     private void Awake() {
         Instance = this;
 
-        volume = PlayerPrefs.GetFloat(SOUND_EFFECTS_VOLUME, .5f);
+        sfxVolume = PlayerPrefs.GetFloat(SOUND_EFFECTS_VOLUME, .5f);
     }
     private void Start() {
         DeliveryManager.Instance.OnOrderSuccess += DeliveryManager_OnOrderSuccess;
@@ -58,21 +58,30 @@ public class SoundManager : MonoBehaviour {
     public void PlayFootstepsSound(Vector3 position, float volume){
         PlaySound(audioClipsRefrencesSO.footstep, position, volume);
     }
+
+    public void PlayCountdownSound(){
+        PlaySound(audioClipsRefrencesSO.warning, PlayerController.Instance.transform.position);
+    }
+
+    public void PlayWarningSound(Vector3 position){
+        PlaySound(audioClipsRefrencesSO.warning, position);
+    }
+
     private void PlaySound(AudioClip audioClip, Vector3 position, float volumeMultiplier = 1f){
-        AudioSource.PlayClipAtPoint(audioClip, position, volume * volumeMultiplier);
+        AudioSource.PlayClipAtPoint(audioClip, position, sfxVolume * volumeMultiplier);
     }
 
     public void ChangeVolume(){
-        volume += .1f;
-        if(volume > 1f){
-            volume = 0;
+        sfxVolume += .1f;
+        if(sfxVolume > 1f){
+            sfxVolume = 0;
         }
 
-        PlayerPrefs.SetFloat(SOUND_EFFECTS_VOLUME, volume);
+        PlayerPrefs.SetFloat(SOUND_EFFECTS_VOLUME, sfxVolume);
         PlayerPrefs.Save();
     }
 
     public float GetVolume(){
-        return volume;
+        return sfxVolume;
     }
 }

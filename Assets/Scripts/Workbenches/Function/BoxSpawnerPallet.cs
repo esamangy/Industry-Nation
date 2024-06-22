@@ -17,7 +17,7 @@ public class BoxSpawnerPallet : BaseWorkbench {
         if(spawnBoxTimer > spawnPlateTimerMax){
             spawnBoxTimer = 0f;
 
-            if(boxesSpawned < maxSpawnedPlates){
+            if(GameManager.Instance.IsGamePlaying() &&  boxesSpawned < maxSpawnedPlates){
                 boxesSpawned ++;
                 OnBoxSpawned?.Invoke(this, EventArgs.Empty);
             }

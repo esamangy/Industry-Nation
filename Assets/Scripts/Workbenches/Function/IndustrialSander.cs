@@ -19,17 +19,17 @@ public class IndustrialSander : BaseWorkbench, IHasProgress {
     }
     [SerializeField] private SandingRecipeSO[] sandingRecipeSOArray;
     [SerializeField] private RuinRecipeSO[] ruinRecipeSOArray;
-    private State state;
+    private State currentState;
     private float sandingTimer;
     private float ruinTimer;
     private SandingRecipeSO sandingRecipeSO;
     private RuinRecipeSO ruinRecipeSO;
     private void Start() {
-        state = State.Idle;
+        currentState = State.Idle;
     }
     private void Update() {
         if(HasFactoryObject()){
-            switch(state){
+            switch(currentState){
                 case State.Idle:
                     break;
                 case State.Sanding:
@@ -116,7 +116,7 @@ public class IndustrialSander : BaseWorkbench, IHasProgress {
     }
 
     private void ChangeState(State newState){
-        state = newState;
+        currentState = newState;
         OnStateChanged?.Invoke(this, new OnStateChangedEventArgs{
             state = newState
         });
@@ -152,5 +152,9 @@ public class IndustrialSander : BaseWorkbench, IHasProgress {
             }
         }
         return null;
+    }
+
+    public bool IsSanded(){
+        return currentState == State.Sanded;
     }
 }

@@ -24,7 +24,7 @@ public class DeliveryManager : MonoBehaviour {
         if(spawnOrderTimer <= 0f){
             spawnOrderTimer = spawnOrderTimerMax;
 
-            if(waitingOrderSOList.Count < waitingOrdersMax){
+            if(GameManager.Instance.IsGamePlaying() && waitingOrderSOList.Count < waitingOrdersMax){
                 OrderSO waitingOrderSO = orderListSO.orderSOList[UnityEngine.Random.Range(0, orderListSO.orderSOList.Count)];
                 waitingOrderSOList.Add(waitingOrderSO);
 

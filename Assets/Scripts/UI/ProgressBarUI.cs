@@ -5,11 +5,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ProgressBarUI : BaseUI {
-
+    private const string IS_WARNING = "IsWarning";
     [SerializeField] GameObject hasProgressGameObject;
     [SerializeField] private Image barImage;
     private IHasProgress hasProgress;
-
+    private Animator animator;
+    private void Awake() {
+        animator = GetComponent<Animator>();
+    }
     private void Start() {
         hasProgress = hasProgressGameObject.GetComponent<IHasProgress>();
         if(hasProgress == null){
@@ -29,5 +32,9 @@ public class ProgressBarUI : BaseUI {
         } else {
             Show();
         }
+    }
+
+    public void ToggleWarning(bool isWarning) {
+        animator.SetBool(IS_WARNING, isWarning);
     }
 }

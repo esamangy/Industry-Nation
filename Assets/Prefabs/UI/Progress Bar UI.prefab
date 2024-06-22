@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 4652927386450883183}
   - component: {fileID: 7436891718733646544}
   - component: {fileID: 6505191882927424873}
+  - component: {fileID: 7936900663800077874}
   m_Layer: 5
   m_Name: Progress Bar UI
   m_TagString: Untagged
@@ -208,7 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4bca5319a1350e4886e9c9aba44e90f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anvil: {fileID: 0}
+  hasProgressGameObject: {fileID: 0}
   barImage: {fileID: 3865779768679693811}
 --- !u!114 &6505191882927424873
 MonoBehaviour:
@@ -223,6 +224,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 2
+--- !u!95 &7936900663800077874
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7778243209571812991}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3ab82b84605ec2b4e8db14f29a760f11, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8876084875216099232
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,7 +303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.84786266, b: 0.32452834, a: 1}
+  m_Color: {r: 1, g: 0.77325594, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
