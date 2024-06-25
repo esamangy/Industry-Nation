@@ -7,9 +7,10 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
     public static PlayerController Instance{get; private set;}
     //Events
     public event EventHandler OnGrabbedSomething;
-    public event EventHandler<OnSelectedShelfChangedEventArgs> OnSelectedShelfChanged;
+    public static event EventHandler<OnSelectedShelfChangedEventArgs> OnAnySelectedShelfChanged;
     public class OnSelectedShelfChangedEventArgs : EventArgs{
         public BaseWorkbench selectedBench;
+        public PlayerController playerSelecting;
     }
 
     [SerializeField] private float moveSpeed = 7f;
@@ -23,13 +24,6 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
     private BaseWorkbench selectedBench;
     private FactoryObject factoryObject;
 
-    private void Awake() {
-        // if(Instance != null){
-        //     throw new Exception("There is more than one player instance");
-        // }
-        // Instance = this;
-    }
-
     private void Start(){
         gameInput.OnInteractAction += GameInput_OnInteractAction;
         gameInput.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
@@ -39,7 +33,9 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
         HandleMovement();
         HandleInteractions();
     }
-
+    public static void ResetStaticData(){
+        OnAnySelectedShelfChanged = null;
+    }
     private void HandleMovement(){
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
 
@@ -121,8 +117,9 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
 
     private void SetSelectedBench(BaseWorkbench baseWorkbench){
         selectedBench = baseWorkbench;
-        OnSelectedShelfChanged?.Invoke(this, new OnSelectedShelfChangedEventArgs{
-            selectedBench = baseWorkbench
+        OnAnySelectedShelfChanged?.Invoke(this, new OnSelectedShelfChangedEventArgs{
+            selectedBench = baseWorkbench,
+            playerSelecting = this,
         });
     }
 

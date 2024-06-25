@@ -61,18 +61,20 @@ public class Workbench : BaseWorkbench, IHasProgress {
     public override void InteractAlternate(PlayerController player) {
         if(HasFactoryObject() && HasRecipeWithInput(GetFactoryObject().GetFactoryObjectSO())){
             player.GetGameInput().OnInteractAlternateActionStopped += GameInput_OnInteractAlternateActionStopped;
-            player.OnSelectedShelfChanged += PlayerController_OnSelectedShelfChanged;
+            PlayerController.OnAnySelectedShelfChanged += PlayerController_OnSelectedShelfChanged;
             progressCoroutine = StartCoroutine(InteractAlertnateHold());
         }
     }
 
     private void GameInput_OnInteractAlternateActionStopped(object sender, EventArgs e) {
         StopCoroutine(progressCoroutine);
+        PlayerController.OnAnySelectedShelfChanged -= PlayerController_OnSelectedShelfChanged;
     }
 
     private void PlayerController_OnSelectedShelfChanged(object sender, PlayerController.OnSelectedShelfChangedEventArgs e) {
         if(e.selectedBench != this){
             StopCoroutine(progressCoroutine);
+            PlayerController.OnAnySelectedShelfChanged -= PlayerController_OnSelectedShelfChanged;
         }
     }
 

@@ -17,7 +17,7 @@ public class SoundManager : MonoBehaviour {
         DeliveryManager.Instance.OnOrderSuccess += DeliveryManager_OnOrderSuccess;
         DeliveryManager.Instance.OnOrderFailed += DeliveryManager_OnOrderFailed;
         Anvil.OnAnyHammer += Anvil_OnAnyHammer;
-        PlayerController.Instance.OnGrabbedSomething += PlayerController_OnGrabbedSomething;
+        //PlayerController.Instance.OnGrabbedSomething += PlayerController_OnGrabbedSomething;
         BaseWorkbench.OnAnyObjectPlacedHere += BaseWorkbench_OnAnyObjectPlacedHere;
         TrashCan.OnAnyObjectTrashed += TrashCan_OnAnyObjectTrashed;
     }

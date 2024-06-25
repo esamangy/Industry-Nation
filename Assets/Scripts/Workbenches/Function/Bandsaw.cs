@@ -43,7 +43,7 @@ public class Bandsaw : BaseWorkbench, IHasProgress {
     public override void InteractAlternate(PlayerController player) {
         if(HasFactoryObject() && HasRecipeWithInput(GetFactoryObject().GetFactoryObjectSO())){
             player.GetGameInput().OnInteractAlternateActionStopped += GameInput_OnInteractAlternateActionStopped;
-            player.OnSelectedShelfChanged += PlayerController_OnSelectedShelfChanged;
+            PlayerController.OnAnySelectedShelfChanged += PlayerController_OnSelectedShelfChanged;
             progressCoroutine = StartCoroutine(InteractAlertnateHold());
         }
     }
