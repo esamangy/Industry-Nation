@@ -24,10 +24,10 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
     private FactoryObject factoryObject;
 
     private void Awake() {
-        if(Instance != null){
-            throw new Exception("There is more than one player instance");
-        }
-        Instance = this;
+        // if(Instance != null){
+        //     throw new Exception("There is more than one player instance");
+        // }
+        // Instance = this;
     }
 
     private void Start(){

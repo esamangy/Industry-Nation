@@ -26,8 +26,8 @@ public class GameManager : MonoBehaviour {
 
     private void Start() {
         gamePlayingTimer = gamePlayingTimerMax;
-        GameInput.Instance.OnPausedAction += GameInput_OnPausedAction;
-        GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
+        // GameInput.Instance.OnPausedAction += GameInput_OnPausedAction;
+        // GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
     }
 
     private void GameInput_OnInteractAction(object sender, EventArgs e) {
