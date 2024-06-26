@@ -7,6 +7,5 @@ public class ResetStaticDataManager : MonoBehaviour {
         Anvil.ResetStaticData();
         BaseWorkbench.ResetStaticData();
         TrashCan.ResetStaticData();
-        PlayerController.ResetStaticData();
     }
 }

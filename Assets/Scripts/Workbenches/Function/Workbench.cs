@@ -9,6 +9,7 @@ public class Workbench : BaseWorkbench, IHasProgress {
     private float workbenchProgress;
     private GameInput gameInput;
     private Coroutine progressCoroutine;
+    private int progressMultiplier = 0;
     public override void Interact(PlayerController player) {
         if(!HasFactoryObject()){
             if(player.HasFactoryObject()){
@@ -36,6 +37,10 @@ public class Workbench : BaseWorkbench, IHasProgress {
             } else {
                 //the player is not carrying something
                 GetFactoryObject().SetFactoryObjectParent(player);
+                StopCoroutine(progressCoroutine);
+                OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs{
+                    progressNormalized = 0f
+                });
             }
         }
     }
@@ -43,7 +48,7 @@ public class Workbench : BaseWorkbench, IHasProgress {
     private IEnumerator InteractAlertnateHold(){
         WorkbenchRecipeSO workbenchRecipeSO = GetWorkbenchRecipeSOWithInput(GetFactoryObject().GetFactoryObjectSO());
         while(workbenchProgress < workbenchRecipeSO.workbenchProgressMax){
-            workbenchProgress += Time.deltaTime;
+            workbenchProgress += Time.deltaTime * progressMultiplier;
             OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs{
                     progressNormalized = workbenchProgress / workbenchRecipeSO.workbenchProgressMax
                 });
@@ -61,20 +66,33 @@ public class Workbench : BaseWorkbench, IHasProgress {
     public override void InteractAlternate(PlayerController player) {
         if(HasFactoryObject() && HasRecipeWithInput(GetFactoryObject().GetFactoryObjectSO())){
             player.GetGameInput().OnInteractAlternateActionStopped += GameInput_OnInteractAlternateActionStopped;
-            PlayerController.OnAnySelectedShelfChanged += PlayerController_OnSelectedShelfChanged;
-            progressCoroutine = StartCoroutine(InteractAlertnateHold());
+            player.OnSelectedShelfChanged += PlayerController_OnSelectedShelfChanged;
+            if(progressMultiplier == 0){
+                progressCoroutine = StartCoroutine(InteractAlertnateHold());
+            }
+            progressMultiplier ++;
         }
     }
 
     private void GameInput_OnInteractAlternateActionStopped(object sender, EventArgs e) {
-        StopCoroutine(progressCoroutine);
-        PlayerController.OnAnySelectedShelfChanged -= PlayerController_OnSelectedShelfChanged;
+        if(progressMultiplier == 1){
+            StopCoroutine(progressCoroutine);
+        }
+        GameInput gameInput = sender as GameInput;
+        gameInput.OnInteractAlternateActionStopped -= GameInput_OnInteractAlternateActionStopped;
+        gameInput.GetComponent<PlayerController>().OnSelectedShelfChanged -= PlayerController_OnSelectedShelfChanged;
+        progressMultiplier --;
     }
 
     private void PlayerController_OnSelectedShelfChanged(object sender, PlayerController.OnSelectedShelfChangedEventArgs e) {
         if(e.selectedBench != this){
-            StopCoroutine(progressCoroutine);
-            PlayerController.OnAnySelectedShelfChanged -= PlayerController_OnSelectedShelfChanged;
+            if(progressMultiplier == 1){
+                StopCoroutine(progressCoroutine);
+            }
+            PlayerController playerController = sender as PlayerController;
+            playerController.OnSelectedShelfChanged -= PlayerController_OnSelectedShelfChanged;
+            playerController.GetComponent<GameInput>().OnInteractAlternateActionStopped -= GameInput_OnInteractAlternateActionStopped;
+            progressMultiplier --;
         }
     }
 

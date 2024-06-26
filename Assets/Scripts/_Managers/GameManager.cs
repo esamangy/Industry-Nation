@@ -19,6 +19,11 @@ public class GameManager : MonoBehaviour {
     private float gamePlayingTimerMax = 60f;
     private float gamePlayingTimer;
     private bool isGamePaused = false;
+    private struct PlayersPausedStatus{
+        public PlayerController playerController;
+        public bool isPaused;
+    }
+    private List<PlayersPausedStatus> playersPausedStatuses;
     private void Awake() {
         Instance = this;
         currentState = State.WaitingToStart;
@@ -26,7 +31,7 @@ public class GameManager : MonoBehaviour {
 
     private void Start() {
         gamePlayingTimer = gamePlayingTimerMax;
-        // GameInput.Instance.OnPausedAction += GameInput_OnPausedAction;
+        //PlayerController.OnAnyPlayerPaused += GameInput_OnPausedAction;
         // GameInput.Instance.OnInteractAction += GameInput_OnInteractAction;
     }
 
@@ -37,6 +42,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private void GameInput_OnPausedAction(object sender, EventArgs e) {
+
         TogglePauseGame();
     }
 

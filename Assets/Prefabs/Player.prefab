@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7301928138752889474}
   - component: {fileID: 4836432141103195092}
   - component: {fileID: 5365271194447157265}
+  - component: {fileID: 2298319154706788903}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -106,13 +107,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47a750a94c4dc5141b86f9b67dda8931, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 7
+  moveForce: 15
   rotateSpeed: 10
   gameInput: {fileID: 4836432141103195092}
   interactLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
   factoryObjectHoldPoint: {fileID: 3917586317799000177}
+--- !u!54 &2298319154706788903
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057920397231148961}
+  serializedVersion: 4
+  m_Mass: 5
+  m_Drag: 3
+  m_AngularDrag: 1
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!1 &9047804159168527046
 GameObject:
   m_ObjectHideFlags: 0

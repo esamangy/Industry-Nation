@@ -9,7 +9,7 @@ public class Bandsaw : BaseWorkbench, IHasProgress {
     private float bandsawProgress;
     private GameInput gameInput;
     private Coroutine progressCoroutine;
-
+    private int progressMultiplier = 0;
     public override void Interact(PlayerController player) {
         if(!HasFactoryObject()){
             if(player.HasFactoryObject()){
@@ -37,21 +37,18 @@ public class Bandsaw : BaseWorkbench, IHasProgress {
             } else {
                 //the player is not carrying something
                 GetFactoryObject().SetFactoryObjectParent(player);
+                StopCoroutine(progressCoroutine);
+                OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs{
+                    progressNormalized = 0f
+                });
             }
         }
     }
-    public override void InteractAlternate(PlayerController player) {
-        if(HasFactoryObject() && HasRecipeWithInput(GetFactoryObject().GetFactoryObjectSO())){
-            player.GetGameInput().OnInteractAlternateActionStopped += GameInput_OnInteractAlternateActionStopped;
-            PlayerController.OnAnySelectedShelfChanged += PlayerController_OnSelectedShelfChanged;
-            progressCoroutine = StartCoroutine(InteractAlertnateHold());
-        }
-    }
-
+    
     private IEnumerator InteractAlertnateHold(){
         BandsawRecipeSO bandsawRecipeSO = GetBandsawRecipeSOWithInput(GetFactoryObject().GetFactoryObjectSO());
         while(bandsawProgress < bandsawRecipeSO.bandsawProgressMax){
-            bandsawProgress += Time.deltaTime;
+            bandsawProgress += Time.deltaTime * progressMultiplier;
             OnProgressChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs{
                     progressNormalized = bandsawProgress / bandsawRecipeSO.bandsawProgressMax
                 });
@@ -65,17 +62,40 @@ public class Bandsaw : BaseWorkbench, IHasProgress {
         FactoryObject.SpawnFactoryObject(outputFactoryObjectSO, this);
         bandsawProgress = 0;
     }
-
-    private void GameInput_OnInteractAlternateActionStopped(object sender, EventArgs e) {
-        StopCoroutine(progressCoroutine);
-    }
-
-    private void PlayerController_OnSelectedShelfChanged(object sender, PlayerController.OnSelectedShelfChangedEventArgs e) {
-        if(e.selectedBench != this){
-            StopCoroutine(progressCoroutine);
+    
+    public override void InteractAlternate(PlayerController player) {
+        if(HasFactoryObject() && HasRecipeWithInput(GetFactoryObject().GetFactoryObjectSO())){
+            player.GetGameInput().OnInteractAlternateActionStopped += GameInput_OnInteractAlternateActionStopped;
+            player.OnSelectedShelfChanged += PlayerController_OnSelectedShelfChanged;
+            if(progressMultiplier == 0){
+                progressCoroutine = StartCoroutine(InteractAlertnateHold());
+            }
+            progressMultiplier ++;
         }
     }
-
+    
+    private void GameInput_OnInteractAlternateActionStopped(object sender, EventArgs e) {
+        if(progressMultiplier == 1){
+            StopCoroutine(progressCoroutine);
+        }
+        GameInput gameInput = sender as GameInput;
+        gameInput.OnInteractAlternateActionStopped -= GameInput_OnInteractAlternateActionStopped;
+        gameInput.GetComponent<PlayerController>().OnSelectedShelfChanged -= PlayerController_OnSelectedShelfChanged;
+        progressMultiplier --;
+    }
+    
+    private void PlayerController_OnSelectedShelfChanged(object sender, PlayerController.OnSelectedShelfChangedEventArgs e) {
+        if(e.selectedBench != this){
+            if(progressMultiplier == 1){
+                StopCoroutine(progressCoroutine);
+            }
+            PlayerController playerController = sender as PlayerController;
+            playerController.OnSelectedShelfChanged -= PlayerController_OnSelectedShelfChanged;
+            playerController.GetComponent<GameInput>().OnInteractAlternateActionStopped -= GameInput_OnInteractAlternateActionStopped;
+            progressMultiplier --;
+        }
+    }
+    
     private bool HasRecipeWithInput(FactoryObjectSO inputFactoryObjectSO) {
         BandsawRecipeSO bandsawRecipeSO = GetBandsawRecipeSOWithInput(inputFactoryObjectSO);
         return bandsawRecipeSO != null;

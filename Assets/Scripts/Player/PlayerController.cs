@@ -3,71 +3,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour, IFactoryObjectParent {
-    public static PlayerController Instance{get; private set;}
     //Events
+    public static event EventHandler OnAnyPlayerPaused;
     public event EventHandler OnGrabbedSomething;
-    public static event EventHandler<OnSelectedShelfChangedEventArgs> OnAnySelectedShelfChanged;
+    public event EventHandler<OnSelectedShelfChangedEventArgs> OnSelectedShelfChanged;
     public class OnSelectedShelfChangedEventArgs : EventArgs{
         public BaseWorkbench selectedBench;
-        public PlayerController playerSelecting;
     }
 
-    [SerializeField] private float moveSpeed = 7f;
+    [SerializeField] private float moveForce = 7f;
     [SerializeField] private float rotateSpeed = 10f;
-    private float playerHeight = 1.5f;
     [SerializeField] private GameInput gameInput;
     [SerializeField] private LayerMask interactLayerMask;
     [SerializeField] private Transform factoryObjectHoldPoint;
+    private Rigidbody m_rigidbody;
     private bool isWalking;
     private Vector3 lastInteractDir;
     private BaseWorkbench selectedBench;
     private FactoryObject factoryObject;
-
+    private void Awake() {
+        m_rigidbody = GetComponent<Rigidbody>();
+    }
     private void Start(){
         gameInput.OnInteractAction += GameInput_OnInteractAction;
         gameInput.OnInteractAlternateAction += GameInput_OnInteractAlternateAction;
+        gameInput.OnPausedAction += GameInput_OnPausedAction;
     }
 
     private void Update(){
         HandleMovement();
         HandleInteractions();
     }
-    public static void ResetStaticData(){
-        OnAnySelectedShelfChanged = null;
-    }
     private void HandleMovement(){
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
+        Vector3 input = new Vector3(inputVector.x, 0, inputVector.y);
 
-        Vector3 moveDir = new Vector3(inputVector.x, 0, inputVector.y);
-
-        float moveDistance = moveSpeed * Time.deltaTime;
-        float playerRadius = .3f;
-        
-        bool canMove = !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDir, moveDistance);
-
-        if(!canMove){
-            Vector3 moveDirX = new Vector3(moveDir.x, 0, 0);
-            canMove = (moveDir.x < -.5f || moveDir.x > .5f) && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirX, moveDistance);
-
-            if(canMove){
-                moveDir = moveDirX;
-            } else {
-                Vector3 moveDirZ = new Vector3(0, 0, moveDir.z);
-                canMove = (moveDir.z < -.5f || moveDir.z > .5f) && !Physics.CapsuleCast(transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirZ, moveDistance);
-                if(canMove){
-                    moveDir = moveDirZ;
-                }
-            }
+        if(input.magnitude > .1f){
+            isWalking = true;
+        } else {
+            isWalking = false;
         }
 
-        if(canMove){
-            transform.position += moveDir * moveDistance;
-        }
+        m_rigidbody.AddForce(input * moveForce);
 
-        isWalking = moveDir != Vector3.zero;
-
-        transform.forward = Vector3.Slerp(transform.forward, moveDir, Time.deltaTime * rotateSpeed);
+        transform.forward = Vector3.Slerp(transform.forward, input, Time.deltaTime * rotateSpeed);
     }
     private void HandleInteractions() {
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
@@ -92,20 +73,23 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
         }
     }
     private void GameInput_OnInteractAction(object sender, EventArgs e) {
-        if(!GameManager.Instance.IsGamePlaying()){
-            return;
-        }
+        // if(!GameManager.Instance.IsGamePlaying()){
+        //     return;
+        // }
         if(selectedBench != null){
             selectedBench.Interact(this);
         }
     }
     private void GameInput_OnInteractAlternateAction(object sender, EventArgs e) {
-        if(!GameManager.Instance.IsGamePlaying()){
-            return;
-        }
+        // if(!GameManager.Instance.IsGamePlaying()){
+        //     return;
+        // }
         if(selectedBench != null){
             selectedBench.InteractAlternate(this);
         }
+    }
+    private void GameInput_OnPausedAction(object sender, EventArgs e) {
+        OnAnyPlayerPaused?.Invoke(this, EventArgs.Empty);
     }
     public bool IsWalking(){
         return isWalking;
@@ -117,9 +101,8 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
 
     private void SetSelectedBench(BaseWorkbench baseWorkbench){
         selectedBench = baseWorkbench;
-        OnAnySelectedShelfChanged?.Invoke(this, new OnSelectedShelfChangedEventArgs{
+        OnSelectedShelfChanged?.Invoke(this, new OnSelectedShelfChangedEventArgs{
             selectedBench = baseWorkbench,
-            playerSelecting = this,
         });
     }
 

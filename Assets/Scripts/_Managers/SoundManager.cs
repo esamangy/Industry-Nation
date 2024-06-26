@@ -33,7 +33,7 @@ public class SoundManager : MonoBehaviour {
     }
 
     private void PlayerController_OnGrabbedSomething(object sender, EventArgs e) {
-        PlaySound(audioClipsRefrencesSO.objectPickup, PlayerController.Instance.transform.position);
+        //PlaySound(audioClipsRefrencesSO.objectPickup, PlayerController.Instance.transform.position);
     }
 
     private void Anvil_OnAnyHammer(object sender, EventArgs e) {
@@ -60,7 +60,7 @@ public class SoundManager : MonoBehaviour {
     }
 
     public void PlayCountdownSound(){
-        PlaySound(audioClipsRefrencesSO.warning, PlayerController.Instance.transform.position);
+        //PlaySound(audioClipsRefrencesSO.warning, PlayerController.Instance.transform.position);
     }
 
     public void PlayWarningSound(Vector3 position){
