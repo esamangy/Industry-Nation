@@ -91,7 +91,7 @@ public class Bandsaw : BaseWorkbench, IHasProgress {
             }
             PlayerController playerController = sender as PlayerController;
             playerController.OnSelectedShelfChanged -= PlayerController_OnSelectedShelfChanged;
-            playerController.GetComponent<GameInput>().OnInteractAlternateActionStopped -= GameInput_OnInteractAlternateActionStopped;
+            playerController.GetGameInput().OnInteractAlternateActionStopped -= GameInput_OnInteractAlternateActionStopped;
             progressMultiplier --;
         }
     }

@@ -20,28 +20,14 @@ public class GameInput : MonoBehaviour{
     }
     private InputActionAsset inputAsset;
     private InputActionMap player;
-    // public static GameInput Instance{get; private set;}
-    // private PlayerInputActions playerInput;
     public event EventHandler OnInteractAction;
     public event EventHandler OnInteractAlternateAction;
     public event EventHandler OnInteractAlternateActionStopped;
     public event EventHandler OnPausedAction;
     public event EventHandler OnBindingRebound;
     private void Awake() {
-        //Instance = this;
         inputAsset = GetComponent<PlayerInput>().actions;
         player = inputAsset.FindActionMap("Player");
-        //playerInput = new PlayerInputActions();
-        // if(PlayerPrefs.HasKey(PLAYER_PREFS_BINDINGS)) {
-        //     playerInput.LoadBindingOverridesFromJson(PlayerPrefs.GetString(PLAYER_PREFS_BINDINGS));
-        // }
-
-        // playerInput.Player.Enable();
-
-        // playerInput.Player.Interact.performed += Interact_performed;
-        // playerInput.Player.InteractAlternate.started += InteractAlternate_Started;
-        // playerInput.Player.InteractAlternate.canceled += InteractAlternate_Canceled;
-        // playerInput.Player.Pause.performed += Pause_Performed;
 
         player.Enable();
         player.FindAction("Interact").performed += Interact_performed;
