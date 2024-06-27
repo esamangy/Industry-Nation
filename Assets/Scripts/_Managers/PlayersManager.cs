@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
 public class PlayersManager : MonoBehaviour {
+    [SerializeField] private GameObject canvas;
     public static PlayersManager Instance; 
     private PlayerInputManager playerInputManager;
     private List<PlayerInput> players;
@@ -38,5 +41,14 @@ public class PlayersManager : MonoBehaviour {
             toReturn.Add(playerInput.GetComponent<PlayerController>());
         }
         return toReturn;
+    }
+
+    public void SetControllingPlayer(PlayerController player){
+        player.GetComponent<MultiplayerEventSystem>().playerRoot = canvas;
+
+    }
+
+    public void RemoveControlFromPlayer(PlayerController player){
+        player.GetComponent<MultiplayerEventSystem>().playerRoot = null;
     }
 }

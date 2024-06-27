@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour, IFactoryObjectParent {
     //Events
-    public static event EventHandler OnAnyPlayerPaused;
+    public event EventHandler OnPlayerPaused;
     public event EventHandler OnGrabbedSomething;
     public event EventHandler<OnSelectedShelfChangedEventArgs> OnSelectedShelfChanged;
     public class OnSelectedShelfChangedEventArgs : EventArgs{
@@ -23,8 +25,10 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
     private Vector3 lastInteractDir;
     private BaseWorkbench selectedBench;
     private FactoryObject factoryObject;
+    private InputSystemUIInputModule inputSystemUIInputModule;
     private void Awake() {
         m_rigidbody = GetComponent<Rigidbody>();
+        inputSystemUIInputModule = GetComponent<InputSystemUIInputModule>();
     }
     private void Start(){
         gameInput.OnInteractAction += GameInput_OnInteractAction;
@@ -37,6 +41,9 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
         HandleInteractions();
     }
     private void HandleMovement(){
+        if(GameManager.Instance.IsPaused()){
+            return;
+        }
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
         Vector3 input = new Vector3(inputVector.x, 0, inputVector.y);
 
@@ -89,7 +96,7 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
         }
     }
     private void GameInput_OnPausedAction(object sender, EventArgs e) {
-        OnAnyPlayerPaused?.Invoke(this, EventArgs.Empty);
+        OnPlayerPaused?.Invoke(this, EventArgs.Empty);
     }
     public bool IsWalking(){
         return isWalking;
@@ -130,5 +137,9 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
 
     public bool HasFactoryObject(){
         return factoryObject != null;
+    }
+
+    public InputActionAsset GetInputActionsAsset(){
+        return gameInput.GetInputActionsAsset();
     }
 }

@@ -11,7 +11,7 @@ public class GamePausedUI : BaseUI {
     [SerializeField] private OptionsUI optionsMenu;
     private void Awake() {
         resumeButton.onClick.AddListener(() => {
-            GameManager.Instance.TogglePauseGame();
+            GameManager.Instance.ResumeGame();
         });
         mainMenuButton.onClick.AddListener(() => {
             Loader.Load(Loader.Scene.MainMenuScene);
@@ -23,22 +23,25 @@ public class GamePausedUI : BaseUI {
     }
 
     private void Start() {
-        GameManager.Instance.OnGamePaused += GameManager_OnGamePaused;
-        GameManager.Instance.OnGameUnpaused += GameManager_OnGameUnpaused;
+        GameManager.Instance.OnGamePausedStatus += GameManager_OnGamePausedStatus;
 
         Hide();
+    }
+
+    private void OnDestroy() {
+        GameManager.Instance.OnGamePausedStatus -= GameManager_OnGamePausedStatus;
+    }
+
+    private void GameManager_OnGamePausedStatus(object sender, GameManager.PauseStatusEventArgs e) {
+        if(e.isPaused){
+            Show();
+        } else {
+            Hide();
+        }
     }
 
     public override void Show(){
         base.Show();
         resumeButton.Select();
-    }
-
-    private void GameManager_OnGameUnpaused(object sender, EventArgs e) {
-        Hide();
-    }
-
-    private void GameManager_OnGamePaused(object sender, EventArgs e) {
-        Show();
     }
 }

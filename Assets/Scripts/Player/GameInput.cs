@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.UI;
 
 public class GameInput : MonoBehaviour{
     private const string PLAYER_PREFS_BINDINGS = "InputBindings";
@@ -20,6 +21,7 @@ public class GameInput : MonoBehaviour{
     }
     private InputActionAsset inputAsset;
     private InputActionMap player;
+    private InputActionMap ui;
     public event EventHandler OnInteractAction;
     public event EventHandler OnInteractAlternateAction;
     public event EventHandler OnInteractAlternateActionStopped;
@@ -28,8 +30,11 @@ public class GameInput : MonoBehaviour{
     private void Awake() {
         inputAsset = GetComponent<PlayerInput>().actions;
         player = inputAsset.FindActionMap("Player");
+        ui = inputAsset.FindActionMap("UI");
 
         player.Enable();
+        ui.Enable();
+        
         player.FindAction("Interact").performed += Interact_performed;
         player.FindAction("InteractAlternate").started += InteractAlternate_Started;
         player.FindAction("InteractAlternate").canceled += InteractAlternate_Canceled;
@@ -42,6 +47,7 @@ public class GameInput : MonoBehaviour{
         player.FindAction("InteractAlternate").canceled -= InteractAlternate_Canceled;
         player.FindAction("Pause").performed -= Pause_Performed;
 
+        ui.Enable();
         player.Disable();
     }
 
@@ -67,6 +73,9 @@ public class GameInput : MonoBehaviour{
         return inputVector.normalized;
     }
 
+    public InputActionAsset GetInputActionsAsset(){
+        return inputAsset;
+    }
     // public string GetBindingText(Binding binding){
     //     switch(binding){
     //         default:

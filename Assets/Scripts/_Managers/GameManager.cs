@@ -11,37 +11,71 @@ public class GameManager : MonoBehaviour {
         GameOver,
     }
     public event EventHandler OnStateChanged;
-    public event EventHandler OnGamePaused;
-    public event EventHandler OnGameUnpaused;
+    public event EventHandler<PauseStatusEventArgs> OnGamePausedStatus;
     public static GameManager Instance { get; private set;}
     private State currentState;
     private float gameStartDelay = 5f;
     private float countdownToStartTimer = 3f;
     private float gamePlayingTimerMax = 60f;
     private float gamePlayingTimer;
-    private bool isGamePaused = false;
-    private struct PlayersPausedStatus{
-        public PlayerController playerController;
+    private PlayerController pausingPlayer;
+    private List<PlayerController> players;
+    public class PauseStatusEventArgs : EventArgs {
         public bool isPaused;
     }
-    private List<PlayersPausedStatus> playersPausedStatuses;
     private void Awake() {
         Instance = this;
         currentState = State.WaitingToStart;
+        pausingPlayer = null;
     }
 
     private void Start() {
         gamePlayingTimer = gamePlayingTimerMax;
-        //PlayerController.OnAnyPlayerPaused += GameInput_OnPausedAction;
+        players = PlayersManager.Instance.GetPlayers();
+        PlayersManager.Instance.OnPlayerListChanged += PlayersManager_OnPlayerListChanged;
+
         StartCoroutine(StartGame(gameStartDelay));
     }
+
+    private void PlayersManager_OnPlayerListChanged(object sender, EventArgs e) {
+        foreach (PlayerController player in players) {
+            if(player != null){
+                player.OnPlayerPaused -= PlayerController_OnPlayerPaused;
+            }
+        }
+
+        players = PlayersManager.Instance.GetPlayers();
+        foreach(PlayerController player in players){
+            player.OnPlayerPaused += PlayerController_OnPlayerPaused;
+        }
+        UpdatePauseStatus();
+    }
+
+    private void PlayerController_OnPlayerPaused(object sender, EventArgs e) {
+        if(pausingPlayer == null){
+            // no one is pausing
+            pausingPlayer = sender as PlayerController;
+        } else {
+            //someone is pauseing
+            if(pausingPlayer == sender as PlayerController){
+                // the person who is pause has unpaused
+                pausingPlayer = null;
+            }
+        }
+
+        foreach(PlayerController player in players){
+            if(player == pausingPlayer){
+                PlayersManager.Instance.SetControllingPlayer(player);
+            } else {
+                PlayersManager.Instance.RemoveControlFromPlayer(player);
+            }
+        }
+        UpdatePauseStatus();
+    }
+
     private IEnumerator StartGame(float delay){
         yield return new WaitForSeconds(delay);
         ChangeState(State.CountdownToStart);
-    }
-    private void GameInput_OnPausedAction(object sender, EventArgs e) {
-
-        TogglePauseGame();
     }
 
     private void Update() {
@@ -92,15 +126,27 @@ public class GameManager : MonoBehaviour {
         return 1 - (gamePlayingTimer / gamePlayingTimerMax);
     }
 
-    public void TogglePauseGame(){
-        isGamePaused = !isGamePaused;
-        if(isGamePaused){
-            Time.timeScale = 0f;
-            OnGamePaused?.Invoke(this, EventArgs.Empty);
+    public bool IsPaused(){
+        return pausingPlayer != null;
+    }
+    public void UpdatePauseStatus(){
+        if(pausingPlayer == null){
+            // not paused
+            Time.timeScale = 1;
+            OnGamePausedStatus?.Invoke(this, new PauseStatusEventArgs{
+                isPaused = false,
+            });
         } else {
-            Time.timeScale = 1f;
-            OnGameUnpaused?.Invoke(this, EventArgs.Empty);
+            // is paused
+            Time.timeScale = 0;
+            OnGamePausedStatus?.Invoke(this, new PauseStatusEventArgs{
+                isPaused = true,
+            });
         }
-        
+    }
+
+    public void ResumeGame(){
+        pausingPlayer = null;
+        UpdatePauseStatus();
     }
 }
