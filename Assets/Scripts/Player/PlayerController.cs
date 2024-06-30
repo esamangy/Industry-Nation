@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
         HandleInteractions();
     }
     private void HandleMovement(){
-        if(GameManager.Instance.IsPaused()){
+        if(GameManager.Instance == null || GameManager.Instance.IsPaused()){
             return;
         }
         Vector2 inputVector = gameInput.GetMovementVectorNormalized();
@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
         }
     }
     private void GameInput_OnInteractAction(object sender, EventArgs e) {
-        if(!GameManager.Instance.IsGamePlaying()){
+        if(GameManager.Instance != null && !GameManager.Instance.IsGamePlaying()){
             return;
         }
         if(selectedBench != null){
