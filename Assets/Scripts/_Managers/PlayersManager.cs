@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.UI;
 
@@ -44,11 +45,16 @@ public class PlayersManager : MonoBehaviour {
     }
 
     public void SetControllingPlayer(PlayerController player){
-        player.GetComponent<MultiplayerEventSystem>().playerRoot = canvas;
+        MultiplayerEventSystem eventSystem = player.GetComponent<MultiplayerEventSystem>();
+        eventSystem.playerRoot = canvas;
+        eventSystem.enabled = true;
+        EventSystem.current = eventSystem;
 
     }
 
     public void RemoveControlFromPlayer(PlayerController player){
+        MultiplayerEventSystem eventSystem = player.GetComponent<MultiplayerEventSystem>();
         player.GetComponent<MultiplayerEventSystem>().playerRoot = null;
+        eventSystem.enabled = false;        
     }
 }
