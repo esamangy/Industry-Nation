@@ -25,10 +25,8 @@ public class PlayerController : MonoBehaviour, IFactoryObjectParent {
     private Vector3 lastInteractDir;
     private BaseWorkbench selectedBench;
     private FactoryObject factoryObject;
-    private InputSystemUIInputModule inputSystemUIInputModule;
     private void Awake() {
         m_rigidbody = GetComponent<Rigidbody>();
-        inputSystemUIInputModule = GetComponent<InputSystemUIInputModule>();
     }
     private void Start(){
         gameInput.OnInteractAction += GameInput_OnInteractAction;

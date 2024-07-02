@@ -7,7 +7,6 @@ public class Workbench : BaseWorkbench, IHasProgress {
     public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
     [SerializeField] private WorkbenchRecipeSO[] workbenchRecipeSOArray;
     private float workbenchProgress;
-    private GameInput gameInput;
     private Coroutine progressCoroutine;
     private int progressMultiplier = 0;
     public override void Interact(PlayerController player) {
