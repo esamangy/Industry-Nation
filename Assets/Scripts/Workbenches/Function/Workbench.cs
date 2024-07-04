@@ -25,7 +25,7 @@ public class Workbench : MonoBehaviour, IHasProgress {
             connectedShelves[i].OnInteractAlt += MediumShelf_OnInteractAlt;
             connectedShelves[i].OnObjectTakenFromHere += MediumShelf_OnObjectTakenFromHere;
         }
-        MediumShelf.OnAnyObjectPlacedHere += MediumShelf_OnAnyObjectPlaced;
+        BaseWorkbench.OnAnyObjectPlacedHere += MediumShelf_OnAnyObjectPlaced;
     }
 
     private void MediumShelf_OnAnyObjectPlaced(object sender, EventArgs e) {

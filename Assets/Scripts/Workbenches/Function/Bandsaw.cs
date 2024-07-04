@@ -7,7 +7,6 @@ public class Bandsaw : BaseWorkbench, IHasProgress {
     public event EventHandler<IHasProgress.OnProgressChangedEventArgs> OnProgressChanged;
     [SerializeField] private BandsawRecipeSO[] bandsawRecipeSOArray;
     private float bandsawProgress;
-    private GameInput gameInput;
     private Coroutine progressCoroutine;
     private int progressMultiplier = 0;
     public override void Interact(PlayerController player) {

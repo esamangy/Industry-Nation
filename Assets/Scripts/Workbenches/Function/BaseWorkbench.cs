@@ -32,7 +32,7 @@ public class BaseWorkbench : MonoBehaviour, IFactoryObjectParent {
         return ItemHoldPoint;
     }
 
-    public void SetFactoryObject(FactoryObject factoryObject){
+    public virtual void SetFactoryObject(FactoryObject factoryObject){
         this.factoryObject = factoryObject;
         if(factoryObject != null){
             OnAnyObjectPlacedHere?.Invoke(this, EventArgs.Empty);

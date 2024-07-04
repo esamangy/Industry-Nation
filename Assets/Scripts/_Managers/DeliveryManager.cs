@@ -12,25 +12,10 @@ public class DeliveryManager : MonoBehaviour {
     [SerializeField] private OrderListSO orderListSO;
     private List<OrderSO> waitingOrderSOList;
     private int waitingOrdersMax = 5;
-    private float spawnOrderTimer;
-    private float spawnOrderTimerMax = 5f;
     private int successfulOrdersAmount;
     private void Awake() {
         Instance = this;
         waitingOrderSOList = new List<OrderSO>();
-    }
-    private void Update() {
-        spawnOrderTimer -= Time.deltaTime;
-        if(spawnOrderTimer <= 0f){
-            spawnOrderTimer = spawnOrderTimerMax;
-
-            if(GameManager.Instance.IsGamePlaying() && waitingOrderSOList.Count < waitingOrdersMax){
-                OrderSO waitingOrderSO = orderListSO.orderSOList[UnityEngine.Random.Range(0, orderListSO.orderSOList.Count)];
-                waitingOrderSOList.Add(waitingOrderSO);
-
-                OnOrderSpawned?.Invoke(this, EventArgs.Empty);
-            }
-        }
     }
 
     public void DeliverOrder(BoxFactoryObject boxFactoryObject) {
@@ -96,5 +81,24 @@ public class DeliveryManager : MonoBehaviour {
 
     public int GetSuccessfulOrdersAmount(){
         return successfulOrdersAmount;
+    }
+
+    public OrderListSO GetOrderListSO(){
+        return orderListSO;
+    }
+
+    public int GetWaitingOrdersMax(){
+        return waitingOrdersMax;
+    }
+
+    public bool IsWaitingListFull(){
+        return waitingOrderSOList.Count == waitingOrdersMax;
+    }
+
+    public void AddOrderToWaitList(){
+        OrderSO waitingOrderSO = orderListSO.orderSOList[UnityEngine.Random.Range(0, orderListSO.orderSOList.Count)];
+        waitingOrderSOList.Add(waitingOrderSO);
+
+        OnOrderSpawned?.Invoke(this, EventArgs.Empty);
     }
 }
