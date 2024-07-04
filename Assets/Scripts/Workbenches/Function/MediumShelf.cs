@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,9 +33,8 @@ public class MediumShelf : BaseWorkbench {
             } else {
                 //player is not carrying anything
                 GetFactoryObject().SetFactoryObjectParent(player);
+                FireOnObjectTakenFromHere();
             }
         }
     }
-
-
 }

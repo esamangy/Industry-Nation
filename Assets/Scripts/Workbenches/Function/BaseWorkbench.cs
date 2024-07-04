@@ -5,6 +5,12 @@ using UnityEngine;
 
 public class BaseWorkbench : MonoBehaviour, IFactoryObjectParent {
     public static event EventHandler OnAnyObjectPlacedHere;
+    public event EventHandler OnObjectTakenFromHere;
+    public event EventHandler<PlayerEventArgs> OnInteract;
+    public event EventHandler<PlayerEventArgs> OnInteractAlt;
+    public class PlayerEventArgs : EventArgs {
+        public PlayerController player;
+    }
     public static void ResetStaticData(){
         OnAnyObjectPlacedHere = null;
     }
@@ -12,10 +18,14 @@ public class BaseWorkbench : MonoBehaviour, IFactoryObjectParent {
     private FactoryObject factoryObject;
 
     public virtual void Interact(PlayerController player){
-        Debug.LogError("BaseWorkbench.Interact();");
+        OnInteract?.Invoke(this, new PlayerEventArgs{
+            player = player
+        });
     }
     public virtual void InteractAlternate(PlayerController player){
-        //Debug.LogError("BaseWorkbench.Interact();");
+        OnInteractAlt?.Invoke(this, new PlayerEventArgs{
+            player = player
+        });
     }
 
     public Transform GetFactoryObjectFollowTransform(){
@@ -42,5 +52,9 @@ public class BaseWorkbench : MonoBehaviour, IFactoryObjectParent {
 
     public bool HasFactoryObject(){
         return factoryObject != null;
+    }
+
+    protected void FireOnObjectTakenFromHere(){
+        OnObjectTakenFromHere?.Invoke(this, EventArgs.Empty);
     }
 }

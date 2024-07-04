@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour {
     public event EventHandler<PauseStatusEventArgs> OnGamePausedStatus;
     public static GameManager Instance { get; private set;}
     private State currentState;
-    private float gameStartDelay = 5f;
+    private float gameStartDelay = 0f;
     private float countdownToStartTimer = 3f;
     private float gamePlayingTimerMax = 60f;
     private float gamePlayingTimer;
