@@ -62,7 +62,6 @@ public class Desk : BaseWorkbench, IHasProgress {
             return;
         }
         if(isRinging && !isAnswering){
-            print("ring and no ans");
             ringingTimer -= Time.deltaTime;
             OnRingingTimerChanged?.Invoke(this, new IHasProgress.OnProgressChangedEventArgs{
                 progressNormalized =  1 - (ringingTimer / ringingTimerMax)
