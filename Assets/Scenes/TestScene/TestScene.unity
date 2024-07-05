@@ -123,12 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &42907028 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5740311505570154600, guid: 99bcafa0a4088b946b7ed8dad2423102,
-    type: 3}
-  m_PrefabInstance: {fileID: 1594515404}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &49013180
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -491,7 +485,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: 0.38268346, y: -0.000000022481217, z: 0.000000009312026, w: 0.92387956}
-  m_LocalPosition: {x: 5.11, y: 7.46, z: -7.46}
+  m_LocalPosition: {x: 0, y: 7.46, z: -7.46}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1338,7 +1332,6 @@ Transform:
   - {fileID: 388300152}
   - {fileID: 766262307}
   - {fileID: 1737467001}
-  - {fileID: 42907028}
   - {fileID: 1823597097}
   - {fileID: 1728138844}
   m_Father: {fileID: 168617379}
@@ -1751,6 +1744,29 @@ PrefabInstance:
       propertyPath: m_Name
       value: Workbench
       objectReference: {fileID: 0}
+    - target: {fileID: 6136366953675398302, guid: 17af8f10ba46013409a38f9b478dccaf,
+        type: 3}
+      propertyPath: workbenchRecipeSOArray.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6136366953675398302, guid: 17af8f10ba46013409a38f9b478dccaf,
+        type: 3}
+      propertyPath: workbenchRecipeSOArray.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: c124d791c0a4d194b9fcf76248bbd377,
+        type: 2}
+    - target: {fileID: 6136366953675398302, guid: 17af8f10ba46013409a38f9b478dccaf,
+        type: 3}
+      propertyPath: workbenchRecipeSOArray.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 571c09d7cf8182546b1c7334b89603bf,
+        type: 2}
+    - target: {fileID: 6136366953675398302, guid: 17af8f10ba46013409a38f9b478dccaf,
+        type: 3}
+      propertyPath: workbenchRecipeSOArray.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 571c09d7cf8182546b1c7334b89603bf,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2322,80 +2338,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47c6549d71cd26e4dbb0022514c4af39, type: 3}
---- !u!1001 &1594515404
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 791882596}
-    m_Modifications:
-    - target: {fileID: 4690849547908081390, guid: 99bcafa0a4088b946b7ed8dad2423102,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: de64c04f27a966545992cec03e2b1113,
-        type: 3}
-    - target: {fileID: 4963668595728487122, guid: 99bcafa0a4088b946b7ed8dad2423102,
-        type: 3}
-      propertyPath: m_Name
-      value: Sanded Plank Resource Crate
-      objectReference: {fileID: 0}
-    - target: {fileID: 5740311505570154600, guid: 99bcafa0a4088b946b7ed8dad2423102,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 5.1161413
-      objectReference: {fileID: 0}
-    - target: {fileID: 5740311505570154600, guid: 99bcafa0a4088b946b7ed8dad2423102,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5740311505570154600, guid: 99bcafa0a4088b946b7ed8dad2423102,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5740311505570154600, guid: 99bcafa0a4088b946b7ed8dad2423102,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5740311505570154600, guid: 99bcafa0a4088b946b7ed8dad2423102,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5740311505570154600, guid: 99bcafa0a4088b946b7ed8dad2423102,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5740311505570154600, guid: 99bcafa0a4088b946b7ed8dad2423102,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5740311505570154600, guid: 99bcafa0a4088b946b7ed8dad2423102,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5740311505570154600, guid: 99bcafa0a4088b946b7ed8dad2423102,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5740311505570154600, guid: 99bcafa0a4088b946b7ed8dad2423102,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 99bcafa0a4088b946b7ed8dad2423102, type: 3}
 --- !u!4 &1606763577 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 420397754972713579, guid: d2118748f8c621c449ce7efb27827401,
@@ -2467,7 +2409,7 @@ Transform:
   m_GameObject: {fileID: 1614148352}
   serializedVersion: 2
   m_LocalRotation: {x: 0.38268346, y: -0.000000022481217, z: 0.000000009312026, w: 0.92387956}
-  m_LocalPosition: {x: 5.11, y: 7.46, z: -7.46}
+  m_LocalPosition: {x: 0, y: 7.46, z: -7.46}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

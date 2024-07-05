@@ -33,7 +33,6 @@ public class Workbench : MonoBehaviour, IHasProgress {
         if(progressCoroutine != null){
             StopCoroutine(progressCoroutine);
             workbenchProgress = 0;
-            StartCoroutine(InteractAlertnateHold());
         }
     }
 
@@ -60,6 +59,7 @@ public class Workbench : MonoBehaviour, IHasProgress {
     }
 
     private IEnumerator InteractAlertnateHold(){
+        print("starting");
         WorkbenchRecipeSO workbenchRecipeSO = GetWorkbenchRecipeSOWithInput(GetInputFactoryObjectArray());
         if(workbenchRecipeSO == null){
             yield break;
@@ -71,19 +71,21 @@ public class Workbench : MonoBehaviour, IHasProgress {
                 });
             yield return null;
         }
-
-        FactoryObjectSO outputFactoryObjectSO = GetOutputForInput(GetInputFactoryObjectArray());
+        FactoryObjectSO outputFactoryObjectSO = workbenchRecipeSO.output;
+        Dictionary<FactoryObjectSO, int> recipePieces = GetRecipePieces(workbenchRecipeSO);
 
         foreach (MediumShelf shelf in connectedShelves) {
             if(shelf.GetFactoryObject() == null){
                 //the shelf is empty
                 continue;
             }
-            if(!workbenchRecipeSO.inputs.ToList().Contains(shelf.GetFactoryObject().GetFactoryObjectSO())){
-                //the shelf contains a factory object not included in the current recipe
-                continue;
+            FactoryObjectSO shelfObjectSO = shelf.GetFactoryObject().GetFactoryObjectSO();
+            if(recipePieces.ContainsKey(shelfObjectSO)){
+                if(recipePieces[shelfObjectSO] > 0){
+                    recipePieces[shelfObjectSO] --;
+                    shelf.GetFactoryObject().DestroySelf();
+                }
             }
-            shelf.GetFactoryObject().DestroySelf();
         }
         MediumShelf ShelfToSpawnOn = connectedShelves[0].HasFactoryObject() ? (connectedShelves[1].HasFactoryObject() ? connectedShelves[2] : connectedShelves[1]) : connectedShelves[0];
         FactoryObject.SpawnFactoryObject(outputFactoryObjectSO, ShelfToSpawnOn);
@@ -135,23 +137,76 @@ public class Workbench : MonoBehaviour, IHasProgress {
             return null;
         }
     }
-
+    /// <summary>
+    /// returns the first valid recipe in the recipes array. This works assuming the list is sorted
+    /// </summary>
+    /// <param name="inputFactoryObjectSOs">An array contained the inputs</param>
+    /// <returns></returns>
     private WorkbenchRecipeSO GetWorkbenchRecipeSOWithInput(params FactoryObjectSO[] inputFactoryObjectSOs){
-        List<FactoryObjectSO> inputs = inputFactoryObjectSOs.ToList();
-        foreach (WorkbenchRecipeSO workbenchRecipeSO in workbenchRecipeSOArray) {
-            bool valid = true;
-            foreach(FactoryObjectSO ingredient in workbenchRecipeSO.inputs){
-                if(!inputs.Contains(ingredient)){
-                    valid = false;
+        for(int i = 0; i < workbenchRecipeSOArray.Length; i ++){
+            WorkbenchRecipeSO recipeToCheck = workbenchRecipeSOArray[i];
+
+            if(recipeToCheck.inputs.Length != inputFactoryObjectSOs.Length){
+                // check if the recipe has the same number of pieces, move to next recipe if not
+                continue;
+            }
+            Dictionary<FactoryObjectSO, int> inputPieces = new Dictionary<FactoryObjectSO, int>();
+            foreach (FactoryObjectSO item in inputFactoryObjectSOs) {
+                if(inputPieces.ContainsKey(item)){
+                    inputPieces[item] ++;
+                } else {
+                    inputPieces.Add(item, 1);
                 }
             }
-            if(valid){
-                return workbenchRecipeSO;
+            Dictionary<FactoryObjectSO, int> recipePices = GetRecipePieces(recipeToCheck);
+            bool inputMatchesRecipe = true;
+            foreach (KeyValuePair<FactoryObjectSO, int> inputPiece in inputPieces) {
+                if(recipePices.ContainsKey(inputPiece.Key)){
+                    // the delivered object has at least one of the same ingredient being checked
+                    if(recipePices[inputPiece.Key] == inputPiece.Value){
+                        //the delivered objetc has the same number of the piece being checked
+                    } else {
+                        //the delivered object has a different number of this piece and there is no point in continuing to check order
+                        inputMatchesRecipe = false;
+                        break;
+                    }
+                } else {
+                    //the delivered object does not have this piece and there is no point in continuing to check order
+                    inputMatchesRecipe = false;
+                    break;
+                }
+            }
+            if(inputMatchesRecipe){
+                //player deliered a correct order
+                return recipeToCheck;
             }
         }
         return null;
+        // foreach (WorkbenchRecipeSO workbenchRecipeSO in workbenchRecipeSOArray) {
+        //     bool valid = true;
+        //     foreach(FactoryObjectSO ingredient in workbenchRecipeSO.inputs){
+        //         if(!inputs.Contains(ingredient)){
+        //             valid = false;
+        //         }
+        //     }
+        //     if(valid){
+        //         return workbenchRecipeSO;
+        //     }
+        // }
+        // return null;
     }
 
+    private Dictionary<FactoryObjectSO, int> GetRecipePieces(WorkbenchRecipeSO receipe){
+        Dictionary<FactoryObjectSO, int> recipePices = new Dictionary<FactoryObjectSO, int>();
+        foreach (FactoryObjectSO item in receipe.inputs) {
+            if(recipePices.ContainsKey(item)){
+                recipePices[item] ++;
+            } else {
+                recipePices.Add(item, 1);
+            }
+        }
+        return recipePices;
+    }
     private void SortRecipeArray() {
         List<WorkbenchRecipeSO> sortedList = new List<WorkbenchRecipeSO>();
         List<WorkbenchRecipeSO> unsortedList = workbenchRecipeSOArray.ToList();
