@@ -2571,6 +2571,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Desk
       objectReference: {fileID: 0}
+    - target: {fileID: 548150646259230558, guid: bab11a8c54d733942a1bdb908c70cbcd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1273522444417244772, guid: bab11a8c54d733942a1bdb908c70cbcd,
         type: 3}
       propertyPath: m_LocalPosition.x

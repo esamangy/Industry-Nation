@@ -8,6 +8,7 @@ public class SoundManager : MonoBehaviour {
     [SerializeField] private AudioClipsRefrencesSO audioClipsRefrencesSO;
     public static SoundManager Instance{get; private set;}
     private float sfxVolume = .5f;
+    private List<PlayerController> players;
     private void Awake() {
         Instance = this;
 
@@ -17,9 +18,23 @@ public class SoundManager : MonoBehaviour {
         DeliveryManager.Instance.OnOrderSuccess += DeliveryManager_OnOrderSuccess;
         DeliveryManager.Instance.OnOrderFailed += DeliveryManager_OnOrderFailed;
         Anvil.OnAnyHammer += Anvil_OnAnyHammer;
-        //PlayerController.Instance.OnGrabbedSomething += PlayerController_OnGrabbedSomething;
+        players = PlayersManager.Instance.GetPlayers();
+        PlayersManager.Instance.OnPlayerListChanged += PlayersManager_OnPlayerListChanged;
         BaseWorkbench.OnAnyObjectPlacedHere += BaseWorkbench_OnAnyObjectPlacedHere;
         TrashCan.OnAnyObjectTrashed += TrashCan_OnAnyObjectTrashed;
+    }
+
+    private void PlayersManager_OnPlayerListChanged(object sender, EventArgs e) {
+        foreach (PlayerController player in players) {
+            if(player != null){
+                player.OnGrabbedSomething -= PlayerController_OnGrabbedSomething;
+            }
+        }
+
+        players = PlayersManager.Instance.GetPlayers();
+        foreach(PlayerController player in players){
+            player.OnGrabbedSomething += PlayerController_OnGrabbedSomething;
+        }
     }
 
     private void TrashCan_OnAnyObjectTrashed(object sender, EventArgs e) {
@@ -33,7 +48,7 @@ public class SoundManager : MonoBehaviour {
     }
 
     private void PlayerController_OnGrabbedSomething(object sender, EventArgs e) {
-        //PlaySound(audioClipsRefrencesSO.objectPickup, PlayerController.Instance.transform.position);
+        PlaySound(audioClipsRefrencesSO.objectPickup, Camera.main.transform.position);
     }
 
     private void Anvil_OnAnyHammer(object sender, EventArgs e) {
@@ -60,7 +75,7 @@ public class SoundManager : MonoBehaviour {
     }
 
     public void PlayCountdownSound(){
-        //PlaySound(audioClipsRefrencesSO.warning, PlayerController.Instance.transform.position);
+        PlaySound(audioClipsRefrencesSO.warning, Camera.main.transform.position);
     }
     public void PlayWarningSound(Vector3 position){
         PlaySound(audioClipsRefrencesSO.warning, position);
@@ -82,5 +97,9 @@ public class SoundManager : MonoBehaviour {
 
     public float GetVolume(){
         return sfxVolume;
+    }
+
+    public void PlayGoSound(float volume = 1){
+        PlaySound(audioClipsRefrencesSO.start, Camera.main.transform.position, volume);
     }
 }

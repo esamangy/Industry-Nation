@@ -13,6 +13,7 @@ public class AudioClipsRefrencesSO : ScriptableObject {
     public AudioClip[] objectDrop;
     public AudioClip[] trash;
     public AudioClip[] warning;
+    public AudioClip start;
     //add ones for all the sawing
 
 }

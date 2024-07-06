@@ -103,6 +103,9 @@ public class GameManager : MonoBehaviour {
 
     private void ChangeState(State newState){
         currentState = newState;
+        if(newState == State.GamePlaying){
+            SoundManager.Instance.PlayGoSound();
+        }
         OnStateChanged?.Invoke(this, EventArgs.Empty);
     }
 
