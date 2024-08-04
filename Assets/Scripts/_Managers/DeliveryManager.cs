@@ -1,27 +1,46 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DeliveryManager : MonoBehaviour {
+    [Serializable]
+    public struct OrderInfo{
+        public LoadingDock dock;
+        public OrderSO orderSO;
+    }
     public event EventHandler OnOrderSpawned;
     public event EventHandler OnOrderCompleted;
-    public event EventHandler OnOrderSuccess;
-    public event EventHandler OnOrderFailed;
+    public event EventHandler<DeliveryEventArgs> OnOrderSuccess;
+    public event EventHandler<DeliveryEventArgs> OnOrderFailed;
     public static DeliveryManager Instance{get; private set;}
     [SerializeField] private OrderListSO orderListSO;
-    private List<OrderSO> waitingOrderSOList;
+    [SerializeField] private OrderInfo[] orderInfos;
     private int waitingOrdersMax = 5;
     private int successfulOrdersAmount;
+    public class DeliveryEventArgs : EventArgs {
+        public LoadingDock loadingDock;
+    }
     private void Awake() {
         Instance = this;
-        waitingOrderSOList = new List<OrderSO>();
+        LoadingDock[] docks = GameObject.FindObjectsOfType<LoadingDock>();
+        orderInfos = new OrderInfo[docks.Length];
+        for(int i = 0; i < orderInfos.Length; i ++){
+            orderInfos[i].dock = docks[i];
+            orderInfos[i].orderSO = null;
+        }
     }
 
-    public void DeliverOrder(BoxFactoryObject boxFactoryObject) {
-        for(int i = 0; i < waitingOrderSOList.Count; i ++){
-            OrderSO waitingOrderSO = waitingOrderSOList[i];
-
+    public void DeliverOrder(LoadingDock dockDeliveredTo, BoxFactoryObject boxFactoryObject) {
+        for(int i = 0; i < orderInfos.Length; i ++){
+            OrderSO waitingOrderSO = orderInfos[i].orderSO;
+            if(waitingOrderSO == null){
+                continue;
+            }
+            if(dockDeliveredTo != orderInfos[i].dock){
+                continue;
+            }
             if(waitingOrderSO.factoryObjectSOList.Count != boxFactoryObject.GetFactoryObjectSOList().Count){
                 // check if the recipe has the same number of pieces, continue if not
                 continue;
@@ -63,20 +82,24 @@ public class DeliveryManager : MonoBehaviour {
                 //player deliered a correct order
                 successfulOrdersAmount ++;
 
-                waitingOrderSOList.RemoveAt(i);
+                orderInfos[i].orderSO = null;
 
                 OnOrderCompleted?.Invoke(this, EventArgs.Empty);
-                OnOrderSuccess?.Invoke(this, EventArgs.Empty);
+                OnOrderSuccess?.Invoke(this, new DeliveryEventArgs{
+                    loadingDock = dockDeliveredTo,
+                });
 
                 return;
             }
         }
         //player deliered an incorrect order
-        OnOrderFailed?.Invoke(this, EventArgs.Empty);
+        OnOrderFailed?.Invoke(this, new DeliveryEventArgs{
+            loadingDock = dockDeliveredTo,
+        });
     }
 
-    public List<OrderSO> GetWaitingOrderSOList(){
-        return waitingOrderSOList;
+    public OrderInfo[] GetWaitingOrderInfos(){
+        return orderInfos;
     }
 
     public int GetSuccessfulOrdersAmount(){
@@ -92,12 +115,40 @@ public class DeliveryManager : MonoBehaviour {
     }
 
     public bool IsWaitingListFull(){
-        return waitingOrderSOList.Count == waitingOrdersMax;
+        foreach (OrderInfo orderInfo in orderInfos) {
+            if(orderInfo.orderSO == null){
+                return false;
+            }
+        }
+        return true;
     }
 
     public void AddOrderToWaitList(){
+        if(IsWaitingListFull()){
+            return;
+        }
+
         OrderSO waitingOrderSO = orderListSO.orderSOList[UnityEngine.Random.Range(0, orderListSO.orderSOList.Count)];
-        waitingOrderSOList.Add(waitingOrderSO);
+
+        List<OrderInfo> valid = new List<OrderInfo>();
+        foreach (OrderInfo orderInfo in orderInfos) {
+            if(orderInfo.orderSO == null){
+                valid.Add(orderInfo);
+            }
+        }
+
+        OrderInfo chosen = valid[UnityEngine.Random.Range(0, valid.Count)];
+        chosen.orderSO = waitingOrderSO;
+
+        for(int i = 0; i < orderInfos.Length; i ++) {
+            if(orderInfos[i].dock == chosen.dock){
+                OrderInfo temp = new OrderInfo {
+                    dock = orderInfos[i].dock,
+                    orderSO = waitingOrderSO
+                };
+                orderInfos[i] = temp;
+            }
+        }
 
         OnOrderSpawned?.Invoke(this, EventArgs.Empty);
     }

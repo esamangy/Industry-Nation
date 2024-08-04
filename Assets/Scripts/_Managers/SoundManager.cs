@@ -57,13 +57,11 @@ public class SoundManager : MonoBehaviour {
     }
 
     private void DeliveryManager_OnOrderFailed(object sender, EventArgs e) {
-        LoadingDock loadingDock = LoadingDock.Instance;
-        PlaySound(audioClipsRefrencesSO.orderFail, loadingDock.transform.position);
+        PlaySound(audioClipsRefrencesSO.orderFail, Camera.main.transform.position);
     }
 
     private void DeliveryManager_OnOrderSuccess(object sender, EventArgs e) {
-        LoadingDock loadingDock = LoadingDock.Instance;
-        PlaySound(audioClipsRefrencesSO.orderSuccess, loadingDock.transform.position);
+        PlaySound(audioClipsRefrencesSO.orderSuccess, Camera.main.transform.position);
     }
 
     private void PlaySound(AudioClip[] audioClipArray, Vector3 position, float volume = 1f){

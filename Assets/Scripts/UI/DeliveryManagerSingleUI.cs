@@ -13,21 +13,29 @@ public class DeliveryManagerSingleUI : MonoBehaviour {
     private void Awake() {
         iconTemplate.gameObject.SetActive(false);
     }
-    public void SetOrderSO(OrderSO orderSO){
-        orderNameText.text = orderSO.orderName;
+    public void SetOrderSO(DeliveryManager.OrderInfo orderInfo){
+        orderNameText.text = orderInfo.dock.GetDockName() + " -- " + orderInfo.orderSO.orderName;
 
-        foreach (Transform child in iconContainer){
-            if(child == iconTemplate){
-                continue;
-            } else {
-                Destroy(child.gameObject);
-            }
-        }
+        ResetIcons();
 
-        foreach (FactoryObjectSO factoryObjectSO in orderSO.factoryObjectSOList) {
+        foreach (FactoryObjectSO factoryObjectSO in orderInfo.orderSO.factoryObjectSOList) {
             Transform iconTransform = Instantiate(iconTemplate, iconContainer);
             iconTransform.gameObject.SetActive(true);
             iconTransform.GetComponent<Image>().sprite = factoryObjectSO.sprite;
+        }
+    }
+
+    public void SetNoOrderSO(){
+        orderNameText.text = "Waiting for order...";
+
+        ResetIcons();
+    }
+
+    private void ResetIcons() {
+        foreach (Transform child in iconContainer){
+            if(child != iconTemplate){
+                Destroy(child.gameObject);
+            }
         }
     }
 }

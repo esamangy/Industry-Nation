@@ -29,17 +29,18 @@ public class DeliveryManagerUI : MonoBehaviour {
 
     private void UpdateVisual(){
         foreach (Transform child in container){
-            if(child == orderTemplate){
-                continue;
-            } else {
+            if(child != orderTemplate){
                 Destroy(child.gameObject);
             }
         }
-
-        foreach(OrderSO orderSO in DeliveryManager.Instance.GetWaitingOrderSOList()){
+        
+        foreach(DeliveryManager.OrderInfo orderInfo in DeliveryManager.Instance.GetWaitingOrderInfos()){
+            if(orderInfo.orderSO == null){
+                continue;
+            }
             Transform orderTransform = Instantiate(orderTemplate, container);
             orderTransform.gameObject.SetActive(true);
-            orderTransform.GetComponent<DeliveryManagerSingleUI>().SetOrderSO(orderSO);
+            orderTransform.GetComponent<DeliveryManagerSingleUI>().SetOrderSO(orderInfo);
         }
     }
 }

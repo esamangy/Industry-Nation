@@ -59,7 +59,6 @@ public class Workbench : MonoBehaviour, IHasProgress {
     }
 
     private IEnumerator InteractAlertnateHold(){
-        print("starting");
         WorkbenchRecipeSO workbenchRecipeSO = GetWorkbenchRecipeSOWithInput(GetInputFactoryObjectArray());
         if(workbenchRecipeSO == null){
             yield break;
